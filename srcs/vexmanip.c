@@ -6,11 +6,11 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:41:14 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/03/06 12:50:29 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/03/06 15:27:44 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/vex.h"
+#include "../includes/vex.h"
 
 double	escprod(t_point u, t_point v)
 {

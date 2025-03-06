@@ -9,7 +9,7 @@ OBJS = ${SRCS:.c=.o}
 
 ${NAME}: ${OBJS}
 	@make -s -C libs/libft MAKEFLAGS=-silent
-	${CC} ${FLAGS} ${OBJS} -o ${NAME} -L./libs/libft -lft
+	${CC} ${FLAGS} ${OBJS} -o ${NAME} -L./libs/libft -lft -lm
 
 all: ${NAME}
 
