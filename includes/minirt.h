@@ -13,6 +13,9 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
+# define HEIGHT 1080
+# define WIDTH 1920
+
 # include "vex.h"
 # include "../libs/libft/libft.h"
 
@@ -74,6 +77,14 @@ typedef	struct s_minirt
 	t_sphere	*sphere;
 	t_plane		*plane;
 	t_cylinder	*cylinder;
+	double		psizex;
+	double		psizey;
+	double		viewport_height;
+	double		viewport_width;
+	t_point		p_centro;
+	t_point		p_first;
+	t_point		right;
+	t_point		up;
 }	t_minirt;
 
 char		**get_map(char *file);
