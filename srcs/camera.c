@@ -6,7 +6,7 @@
 /*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:01:13 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/03/11 00:09:31 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/03/16 22:32:19 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,45 @@ t_point	get_pixel(int i, int j, t_minirt *rt)
 
 	right_part = vecprodesc(rt->right, i * rt->psizex);
 	up_part = vecprodesc(rt->up, j * rt->psizey);
-	pixel = vecsoma(rt->p_firsts, vecdif(right_part, up_part));
+	pixel = vecsoma(rt->p_first, vecdif(right_part, up_part));
 	return (pixel);
+}
+
+t_color	intersect(t_point direction, t_minirt *rt)
+{
+	double	a;
+	double	b;
+	double	c;
+	double	delta;
+	double	t[2];
+	double	raio;
+	t_point	oc;
+	t_color	color;
+
+	color.r = 0;
+	color.g = 0;
+	color.b = 0;
+	raio = rt->sphere->diameter / 2;
+	oc = vecdif(rt->camera.coordinates, rt->sphere->coordinates);
+	a = escprod(direction, direction);
+	b = 2 * (escprod(direction, oc));
+	c = escprod(oc, oc) - (raio * raio);
+	delta = (b * b) - (4 * a * c);
+	if (delta < 0)
+		return (color);
+	t[0] = (-b - sqrt(delta)) / (2 * a);
+	t[1] = (-b + sqrt(delta)) / (2 * a);
+	if (t[0] > 0 || t[1] > 0)
+		return (rt->sphere->color);
+	return (color);
 }
 
 void	put_scene(t_minirt *rt)
 {
 	int		i;
 	int		j;
+	t_color	color;
+	t_point	direction;
 	t_point	pixel;
 
 	i = 0;
@@ -55,6 +86,8 @@ void	put_scene(t_minirt *rt)
 		while (j < WIDTH)
 		{
 			pixel = get_pixel(i, j, rt);
+			direction = vecnorm(vecdif(pixel, rt->camera.coordinates));
+			color = intersect(direction, rt);
 		}
 	}
 }
