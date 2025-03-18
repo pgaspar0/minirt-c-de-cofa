@@ -21,8 +21,8 @@ void	init_camera(t_minirt *rt)
 	updef.z = 0;
 	rt->right = vecprod(updef, rt->camera.o_vector);
 	rt->up = vecprod(rt->camera.o_vector, rt->right);
-    rt->viewport_height = 2 * tan(rt->camera.fov / 2);
-    rt->viewport_width = rt->viewport_height * ((double)(WIDTH/HEIGHT));
+    rt->viewport_height = 2 * tan((rt->camera.fov * (M_PI/180)) / 2);
+    rt->viewport_width = rt->viewport_height * (((double)WIDTH/HEIGHT));
 	rt->p_centro = vecsoma(rt->camera.coordinates, rt->camera.o_vector);
 	rt->p_first = vecdif(rt->p_centro, vecprodesc(rt->right, rt->viewport_width / 2));
 	rt->p_first = vecsoma(rt->p_first, vecprodesc(rt->up, rt->viewport_height / 2));
@@ -54,10 +54,10 @@ t_color	intersect(t_point direction, t_minirt *rt)
 	t_color	color;
 
 	color.r = 0;
-	color.g = 0;
-	color.b = 0;
-	raio = rt->sphere->diameter / 2;
-	oc = vecdif(rt->camera.coordinates, rt->sphere->coordinates);
+	color.g = 80;
+	color.b = 100;
+	raio = rt->sphere[0].diameter / 2;
+	oc = vecdif(rt->camera.coordinates, rt->sphere[0].coordinates);
 	a = escprod(direction, direction);
 	b = 2 * (escprod(direction, oc));
 	c = escprod(oc, oc) - (raio * raio);
@@ -67,27 +67,36 @@ t_color	intersect(t_point direction, t_minirt *rt)
 	t[0] = (-b - sqrt(delta)) / (2 * a);
 	t[1] = (-b + sqrt(delta)) / (2 * a);
 	if (t[0] > 0 || t[1] > 0)
-		return (rt->sphere->color);
+		return (rt->sphere[0].color);
 	return (color);
+}
+
+int	color_to_int(t_color color)
+{
+	return ((color.r << 16) | (color.g << 8) | color.b);
 }
 
 void	put_scene(t_minirt *rt)
 {
-	int		i;
-	int		j;
+	int		x;
+	int		y;
 	t_color	color;
 	t_point	direction;
 	t_point	pixel;
 
-	i = 0;
-	while (i < HEIGHT)
+	y = 0;
+	while (y < HEIGHT)
 	{
-		j = 0;
-		while (j < WIDTH)
+		x = 0;
+		while (x < WIDTH)
 		{
-			pixel = get_pixel(i, j, rt);
-			direction = vecnorm(vecdif(pixel, rt->camera.coordinates));
+			pixel = get_pixel(x, y, rt);
+			direction = vecdif(pixel, rt->camera.coordinates);
+			direction = vecnorm(direction);
 			color = intersect(direction, rt);
+			put_pixel(rt, x, y, color_to_int(color));
+			x++;
 		}
+		y++;
 	}
 }

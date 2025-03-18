@@ -18,6 +18,7 @@
 
 # include "vex.h"
 # include "../libs/libft/libft.h"
+# include "../libs/minilibx-linux/mlx.h"
 
 typedef struct s_color
 {
@@ -85,10 +86,20 @@ typedef	struct s_minirt
 	t_point		p_first;
 	t_point		right;
 	t_point		up;
+	void    	*con;
+    void    	*img;
+    void    	*window;
+    int     	bpp;
+    int     	endian;
+    int     	size_line;
+    char    	*data;
 }	t_minirt;
 
 char		**get_map(char *file);
 
 void		parse_map(char **map, t_minirt *rt);
+void		init_camera(t_minirt *rt);
+void		put_scene(t_minirt *rt);
+void		put_pixel(t_minirt *rt, int x, int y, int color);
 
 #endif
