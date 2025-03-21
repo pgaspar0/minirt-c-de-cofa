@@ -111,6 +111,7 @@ void		init_camera(t_minirt *rt);
 void		put_scene(t_minirt *rt);
 void		put_pixel(t_minirt *rt, int x, int y, int color);
 
-t_color	intersect_scene(t_point direction, t_minirt *rt);
+t_color		intersect_scene(t_point direction, t_minirt *rt);
+t_color		add_alight(t_color color, t_minirt *rt);
 
 #endif
