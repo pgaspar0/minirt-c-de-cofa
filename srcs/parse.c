@@ -92,7 +92,14 @@ void	parse_light(char *line, t_minirt *rt)
 	splitted_line = ft_split(line, ' ');
 	rt->light.coordinates = parse_point(splitted_line[1]);
 	rt->light.ratio = ft_atod(splitted_line[2], 1, 0, 0);
-	rt->light.color = parse_color(splitted_line[3]);
+	if (splitted_line[3])
+		rt->light.color = parse_color(splitted_line[3]);
+	else
+	{
+		rt->light.color.r = 255;
+		rt->light.color.g = 255;
+		rt->light.color.b = 255;
+	}
 	free_matrix(splitted_line);
 }
 
@@ -103,6 +110,7 @@ void	parse_sphere(char *line, t_minirt *rt, int index)
 	splitted_line = ft_split(line, ' ');
 	rt->sphere[index].coordinates = parse_point(splitted_line[1]);
 	rt->sphere[index].diameter = ft_atod(splitted_line[2], 1, 0, 0);
+	rt->sphere[index].radius = rt->sphere[index].diameter / 2;
 	rt->sphere[index].color = parse_color(splitted_line[3]);
 	free_matrix(splitted_line);
 }
@@ -126,6 +134,7 @@ void	parse_cylinder(char *line, t_minirt *rt, int index)
 	rt->cylinder[index].coordinates = parse_point(splitted_line[1]);
 	rt->cylinder[index].a_vector = parse_point(splitted_line[2]);
 	rt->cylinder[index].diameter = ft_atod(splitted_line[3], 1, 0, 0);
+	rt->cylinder[index].radius = rt->cylinder[index].diameter / 2;
 	rt->cylinder[index].height = ft_atod(splitted_line[4], 1, 0, 0);
 	rt->cylinder[index].color = parse_color(splitted_line[5]);
 	free_matrix(splitted_line);
@@ -134,25 +143,27 @@ void	parse_cylinder(char *line, t_minirt *rt, int index)
 void	init_elements(char **map, t_minirt *rt)
 {
 	int	i;
-	int	sp;
-	int	pl;
-	int	cy;
 
 	i = 0;
-	sp = pl = cy = 0;
+	rt->sp = 0;
+	rt->pl = 0;
+	rt->cy = 0;
 	while (map[i])
 	{
 		if (map[i][0] == 's')
-			sp++;
+			rt->sp++;
 		else if (map[i][0] == 'p')
-			pl++;
+			rt->pl++;
 		else if (map[i][0] == 'c')
-			cy++;
+			rt->cy++;
 		i++;
 	}
-	rt->sphere = malloc(sizeof(t_sphere) * sp);
-	rt->plane = malloc(sizeof(t_plane) * pl);
-	rt->cylinder = malloc(sizeof(t_cylinder) * cy);
+	rt->sphere = malloc(sizeof(t_sphere) * rt->sp);
+	rt->plane = malloc(sizeof(t_plane) * rt->pl);
+	rt->cylinder = malloc(sizeof(t_cylinder) * rt->cy);
+	rt->background.r = 0;
+	rt->background.g = 80;
+	rt->background.b = 100;
 }
 
 void	parse_map(char **map, t_minirt *rt)

@@ -12,10 +12,21 @@
 
 #include "../includes/minirt.h"
 
+void	put_pixel(t_minirt *rt, int x, int y, int color)
+{
+	char	*dst;
+	int		offset;
+
+	offset = y * rt->size_line + x * (rt->bpp / 8);
+	dst = rt->data + offset;
+	if (x < WIDTH && x >= 0 && y >= 0 && y < HEIGHT)
+		*(unsigned int *)dst = color;
+}
+
 int main(int ac, char *av[])
 {
-    t_minirt    rt;
     char    **map;
+    t_minirt    rt;
 
     if (ac != 2)
     {
@@ -27,6 +38,13 @@ int main(int ac, char *av[])
         return (0);
     parse_map(map, &rt);
     free_matrix(map);
-    printf("Finish\n");
+    rt.con = mlx_init();
+    rt.window = mlx_new_window(rt.con, WIDTH, HEIGHT, "Ray fn Tracer");
+    rt.img = mlx_new_image(rt.con, WIDTH, HEIGHT);
+    rt.data = mlx_get_data_addr(rt.img, &rt.bpp, &rt.size_line, &rt.endian);
+    init_camera(&rt);
+    put_scene(&rt);
+    mlx_put_image_to_window(rt.con, rt.window, rt.img, 0, 0);
+    mlx_loop(rt.con);
     return (0);    
 }
