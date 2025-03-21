@@ -78,3 +78,13 @@ int	is_norm(t_point v)
 {
 	return (fabs(vecmod(v) - 1) < 0.00001);
 }
+
+t_point	vecmult(t_point u, t_point v)
+{
+	t_point	w;
+
+	w.x = u.x * v.x;
+	w.y = u.y * v.y;
+	w.z = u.z * v.z;
+	return (w);
+}
