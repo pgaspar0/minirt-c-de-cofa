@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 13:01:56 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/03/05 12:48:31 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/03/22 23:14:15 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef	struct s_minirt
 	int			sp;
 	int			pl;
 	int			cy;
+	double		closest;
 }	t_minirt;
 
 int			color_to_int(t_color color);
@@ -111,6 +112,7 @@ void		init_camera(t_minirt *rt);
 void		put_scene(t_minirt *rt);
 void		put_pixel(t_minirt *rt, int x, int y, int color);
 
+t_color		add_dlight(t_minirt *rt, t_color color, t_point bateu, t_point normal);
 t_color		intersect_scene(t_point direction, t_minirt *rt);
 t_color		add_alight(t_color color, t_minirt *rt);
 
