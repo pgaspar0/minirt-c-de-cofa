@@ -6,7 +6,7 @@
 /*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:28:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/03/22 23:14:26 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/03/23 08:10:48 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_color	intersect_scene(t_point direction, t_minirt *rt)
 	t_point		bateu;
 	t_point		normal;
 	t_color		color;
+	t_color		old_color;
 	int			i;
 
 	i = 0;
@@ -53,11 +54,12 @@ t_color	intersect_scene(t_point direction, t_minirt *rt)
 			{
 				rt->closest = t[0];
 				color = rt->sphere[i].color;
+				old_color = color;
 				bateu = vecsoma(rt->camera.coordinates, vecprodesc(direction, rt->closest));
 				normal = vecdif(bateu, rt->sphere[i].coordinates);
 				normal = vecnorm(normal);
 				color = add_alight(color, rt);
-				color = add_dlight(rt, color, bateu, normal);
+				color = add_dlight(rt, color, old_color, bateu, normal);
 			}
 		}
 		i++;
