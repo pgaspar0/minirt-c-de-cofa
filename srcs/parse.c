@@ -161,9 +161,6 @@ void	init_elements(char **map, t_minirt *rt)
 	rt->sphere = malloc(sizeof(t_sphere) * rt->sp);
 	rt->plane = malloc(sizeof(t_plane) * rt->pl);
 	rt->cylinder = malloc(sizeof(t_cylinder) * rt->cy);
-	rt->background.r = 0;
-	rt->background.g = 80;
-	rt->background.b = 100;
 }
 
 void	parse_map(char **map, t_minirt *rt)
