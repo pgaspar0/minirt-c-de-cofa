@@ -104,6 +104,7 @@ typedef	struct s_minirt
 
 int			color_to_int(t_color color);
 int			intersect_sphere(t_sphere *sphere, t_point direction, t_minirt *rt, double *t);
+int			intersect_plane(t_minirt *rt, t_plane *plane, t_point direction, double *t);
 
 char		**get_map(char *file);
 
@@ -113,7 +114,11 @@ void		put_scene(t_minirt *rt);
 void		put_pixel(t_minirt *rt, int x, int y, int color);
 
 t_color		add_dlight(t_minirt *rt, t_color color, t_color old_color, t_point bateu, t_point normal);
+t_color		sphere_loop(t_minirt *rt, t_point direction, double *t, t_color color);
+t_color		plane_loop(t_minirt *rt, t_point direction, double *t, t_color color);
+t_color		add_light(t_color color, t_minirt *rt, t_point bateu, t_point normal);
 t_color		intersect_scene(t_point direction, t_minirt *rt);
+t_color		colormult(t_color color, double mult);
 t_color		add_alight(t_color color, t_minirt *rt);
 
 #endif

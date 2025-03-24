@@ -12,6 +12,15 @@
 
 #include "../includes/minirt.h"
 
+t_color	add_light(t_color color, t_minirt *rt, t_point bateu, t_point normal)
+{
+	t_color	final;
+
+	final = add_alight(color, rt);
+	final = add_dlight(rt, final, color, bateu, normal);
+	return (final);
+}
+
 t_color add_alight(t_color color, t_minirt *rt)
 {
     t_color new;

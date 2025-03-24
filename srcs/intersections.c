@@ -52,52 +52,11 @@ int	intersect_plane(t_minirt *rt, t_plane *plane, t_point direction, double *t)
 t_color	intersect_scene(t_point direction, t_minirt *rt)
 {
 	double		t[2];
-	t_point		bateu;
-	t_point		normal;
 	t_color		color;
-	t_color		old_color;
-	int			i;
 
-	i = 0;
 	rt->closest = 1e9;
-	color = rt->alight.color;
-	while (i < rt->sp)
-	{
-		if (intersect_sphere(&rt->sphere[i], direction, rt, t))
-		{
-			if (t[0] < 0)
-				t[0] = t[1];
-			if (t[0] > 0 && t[0] < rt->closest)
-			{
-				rt->closest = t[0];
-				color = rt->sphere[i].color;
-				old_color = color;
-				bateu = vecsoma(rt->camera.coordinates, vecprodesc(direction, rt->closest));
-				normal = vecdif(bateu, rt->sphere[i].coordinates);
-				normal = vecnorm(normal);
-				color = add_alight(color, rt);
-				color = add_dlight(rt, color, old_color, bateu, normal);
-			}
-		}
-		i++;
-	}
-	i = 0;
-	while (i < rt->pl)
-	{
-		if (intersect_plane(rt, &rt->plane[i], direction, t))
-		{
-			if (t[0] > 0 && t[0] < rt->closest)
-			{
-				rt->closest = t[0];
-				color = rt->plane[i].color;
-				old_color = color;
-				bateu = vecsoma(rt->camera.coordinates, vecprodesc(direction, rt->closest));
-				normal = rt->plane[i].n_vector;
-				color = add_alight(color, rt);
-				color = add_dlight(rt, color, old_color, bateu, normal);
-			}
-		}
-		i++;
-	}
+	color = colormult(rt->alight.color, rt->alight.ratio);
+	color = sphere_loop(rt, direction, t, color);
+	color = plane_loop(rt, direction, t, color);
 	return (color);
 }

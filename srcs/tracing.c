@@ -42,7 +42,6 @@ void	put_scene(t_minirt *rt)
 			direction = vecdif(pixel, rt->camera.coordinates);
 			direction = vecnorm(direction);
 			color = intersect_scene(direction, rt);
-			// color = add_alight(color, rt);
 			put_pixel(rt, x, y, color_to_int(color));
 			x++;
 		}
