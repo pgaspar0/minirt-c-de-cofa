@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:11:18 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/03/05 13:00:49 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/03/27 16:21:42 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ void	put_pixel(t_minirt *rt, int x, int y, int color)
 		*(unsigned int *)dst = color;
 }
 
+int print_sphere_count(const t_minirt *rt)
+{
+    if (!rt)
+    {
+        fprintf(stderr, "Erro: Estrutura t_minirt nula.\n");
+        return;
+    }
+    return(rt->sp);
+}
+
 int main(int ac, char *av[])
 {
     char    **map;
@@ -37,6 +47,10 @@ int main(int ac, char *av[])
     if (!map)
         return (0);
     parse_map(map, &rt);
+    if(check_scene(&rt))
+         return (1);
+    print_sphere_count(&rt);
+    printf("Não teve erro aparentemente\n");
     free_matrix(map);
     rt.con = mlx_init();
     rt.window = mlx_new_window(rt.con, WIDTH, HEIGHT, "Ray fn Tracer");

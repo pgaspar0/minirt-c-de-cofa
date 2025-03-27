@@ -1,7 +1,7 @@
 CC = cc
 NAME = minirt
 FLAGS = -Wall -Wextra -Werror
-SRCS =  ./srcs/intersections.c ./srcs/hfuncs.c ./srcs/tracing.c ./srcs/minirt.c ./srcs/camera.c ./srcs/parse.c ./srcs/vexmanip.c
+SRCS =  ./srcs/intersections.c ./srcs/hfuncs.c ./srcs/tracing.c ./srcs/minirt.c ./srcs/camera.c ./srcs/parse.c ./srcs/vexmanip.c ./srcs/verifications.c
 OBJS = ${SRCS:.c=.o}
 
 .c.o:
