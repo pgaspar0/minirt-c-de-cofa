@@ -16,3 +16,13 @@ int	color_to_int(t_color color)
 {
 	return ((color.r << 16) | (color.g << 8) | color.b);
 }
+
+t_color	colormult(t_color color, double mult)
+{
+	t_color	new;
+
+	new.r = color.r * mult;
+	new.g = color.g * mult;
+	new.b = color.b * mult;
+	return (new);
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersections.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:28:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/03/21 11:28:10 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/03/23 08:10:48 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,31 @@ int	intersect_sphere(t_sphere *sphere, t_point direction, t_minirt *rt, double *
 	return (1);
 }
 
+int	intersect_plane(t_minirt *rt, t_plane *plane, t_point direction, double *t)
+{
+	double	npmo;
+	double	nd;
+	t_point	pmo;
+	
+	pmo = vecdif(plane->coordinates, rt->camera.coordinates);
+	npmo = escprod(plane->n_vector, pmo);
+	nd = escprod(plane->n_vector, direction);
+	if (nd == 0)
+		return (0);
+	t[0] = npmo / nd;
+	if (t[0] < 0)
+		return (0);
+	return (1);
+}
+
 t_color	intersect_scene(t_point direction, t_minirt *rt)
 {
-	double		closest;
 	double		t[2];
 	t_color		color;
-	int			i;
 
-	i = 0;
-	closest = 1e9;
-	color = rt->alight.color;
-	while (i < rt->sp)
-	{
-		if (intersect_sphere(&rt->sphere[i], direction, rt, t))
-		{
-			if (t[0] < 0)
-				t[0] = t[1];
-			if (t[0] > 0 && t[0] < closest)
-			{
-				closest = t[0];
-				color = rt->sphere[i].color;
-			}
-		}
-		i++;
-	}
+	rt->closest = 1e9;
+	color = colormult(rt->alight.color, rt->alight.ratio);
+	color = sphere_loop(rt, direction, t, color);
+	color = plane_loop(rt, direction, t, color);
 	return (color);
 }

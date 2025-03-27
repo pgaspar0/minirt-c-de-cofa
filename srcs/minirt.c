@@ -22,6 +22,13 @@ void	put_pixel(t_minirt *rt, int x, int y, int color)
 	if (x < WIDTH && x >= 0 && y >= 0 && y < HEIGHT)
 		*(unsigned int *)dst = color;
 }
+void    init_mlx(t_minirt *rt)
+{
+    rt->con = mlx_init();
+    rt->window = mlx_new_window(rt->con, WIDTH, HEIGHT, "Ray fn Tracer");
+    rt->img = mlx_new_image(rt->con, WIDTH, HEIGHT);
+    rt->data = mlx_get_data_addr(rt->img, &rt->bpp, &rt->size_line, &rt->endian);
+}
 
 int print_sphere_count(const t_minirt *rt)
 {
@@ -52,10 +59,7 @@ int main(int ac, char *av[])
     print_sphere_count(&rt);
     printf("Não teve erro aparentemente\n");
     free_matrix(map);
-    rt.con = mlx_init();
-    rt.window = mlx_new_window(rt.con, WIDTH, HEIGHT, "Ray fn Tracer");
-    rt.img = mlx_new_image(rt.con, WIDTH, HEIGHT);
-    rt.data = mlx_get_data_addr(rt.img, &rt.bpp, &rt.size_line, &rt.endian);
+    init_mlx(&rt);
     init_camera(&rt);
     put_scene(&rt);
     mlx_put_image_to_window(rt.con, rt.window, rt.img, 0, 0);
