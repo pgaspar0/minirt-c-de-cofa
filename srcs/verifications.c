@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:53:51 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/03/27 16:28:47 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/03/28 11:20:05 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 // check colors, RGB (0 - 255)
 int	check_colors(t_color color)
 {
-	return ((color.r >= 0 && color.r <= 255) && (color.g >= 0
-			&& color.g <= 255) && (color.b >= 0 && color.b <= 255));
+	return ((color.r >= 0 && color.r <= 255) && (color.g >= 0 && color.g <= 255)
+		&& (color.b >= 0 && color.b <= 255));
 }
 
 // check ambient's light ratio range (0.0 -> 1.0), and colors
@@ -42,12 +42,6 @@ int	check_light(t_light *light)
 		&& check_colors(light->color));
 }
 
-// check sphere colors
-int	check_sphere(t_sphere *sphere)
-{
-	return (check_colors(sphere->color));
-}
-
 // check plane 3d normalized vector (-1.0;1.0) and colors
 int	check_plane(t_plane *plane)
 {
@@ -66,24 +60,61 @@ int	check_cylinder(t_cylinder *cylinder)
 		&& (check_colors(cylinder->color)));
 }
 
-// função para efetuar todas as verificações nos campos do mapa
+int	check_sphere(t_sphere *sphere)
+{
+	if (!check_colors(sphere->color))
+		return (0);
+	return (1);
+}
+
+static int	check_scene2(t_minirt *scene)
+{
+	int	i;
+
+	i = 0;
+	while (i < scene->pl)
+	{
+		if (!check_plane(&scene->plane[i]))
+		{
+			printf("Error: plane %d is invalid\n", i + 1);
+			return (1);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < scene->cy)
+	{
+		if (!check_cylinder(&scene->cylinder[i]))
+		{
+			printf("Error: cylinder %d is invalid\n", i + 1);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	check_scene(t_minirt *scene)
 {
-	int i;
+	int	i;
+
+	i = 0;
 	if (!(check_alight(&scene->alight) && check_camera(&scene->camera)
 			&& check_light(&scene->light)))
 	{
-		printf("Error: invalid scenes values");
+		printf("Error: Invalid scene values\n");
 		return (1);
 	}
-	i = 0;
-	// é suposto fazer aqui uma estrutura para verificar cada esfera and so on
-	// while (print_sphere_count(scene) != i)
-	// {
-	// 	if ()
-
-	// 	i++;
-	// }
-	// if ()
+	while (i < scene->sp)
+	{
+		if (!check_sphere(&scene->sphere[i]))
+		{
+			printf("Error: Sphere %d is invalid\n", i + 1);
+			return (1);
+		}
+		i++;
+	}
+	if (check_scene2(scene))
+		return (1);
 	return (0);
 }

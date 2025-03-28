@@ -6,12 +6,9 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/27 16:35:52 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/03/28 08:35:43 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-
 
 #ifndef MINIRT_H
 # define MINIRT_H
@@ -108,16 +105,16 @@ typedef struct s_minirt
 int				color_to_int(t_color color);
 int				intersect_sphere(t_sphere *sphere, t_point direction,
 					t_minirt *rt, double *t);
-int			intersect_plane(t_minirt *rt, t_plane *plane, t_point direction, double *t);
+int				intersect_plane(t_minirt *rt, t_plane *plane, t_point direction,
+					double *t);
 int				check_colors(t_color color);
 int				check_alight(t_alight *ambiente);
 int				check_camera(t_camera *camera);
 int				check_light(t_light *light);
-int				check_sphere(t_sphere *sphere);
+int				check_sphere(t_sphere *sphere);//, int n);
 int				check_plane(t_plane *plane);
 int				check_cylinder(t_cylinder *cylinder);
 int				check_scene(t_minirt *scene);
-int				print_sphere_count(const t_minirt *rt);
 
 char			**get_map(char *file);
 
@@ -126,12 +123,16 @@ void			init_camera(t_minirt *rt);
 void			put_scene(t_minirt *rt);
 void			put_pixel(t_minirt *rt, int x, int y, int color);
 
-t_color				add_dlight(t_minirt *rt, t_color color, t_color old_color, t_point bateu, t_point normal);
-t_color		sphere_loop(t_minirt *rt, t_point direction, double *t, t_color color);
-t_color		plane_loop(t_minirt *rt, t_point direction, double *t, t_color color);
-t_color		add_light(t_color color, t_minirt *rt, t_point bateu, t_point normal);
-t_color		intersect_scene(t_point direction, t_minirt *rt);
-t_color		colormult(t_color color, double mult);
-t_color		add_alight(t_color color, t_minirt *rt);
+t_color			add_dlight(t_minirt *rt, t_color color, t_color old_color,
+					t_point bateu, t_point normal);
+t_color			sphere_loop(t_minirt *rt, t_point direction, double *t,
+					t_color color);
+t_color			plane_loop(t_minirt *rt, t_point direction, double *t,
+					t_color color);
+t_color			add_light(t_color color, t_minirt *rt, t_point bateu,
+					t_point normal);
+t_color			intersect_scene(t_point direction, t_minirt *rt);
+t_color			colormult(t_color color, double mult);
+t_color			add_alight(t_color color, t_minirt *rt);
 
 #endif

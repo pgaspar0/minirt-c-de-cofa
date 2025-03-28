@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:11:18 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/03/27 16:21:42 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:39:47 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,6 @@ void    init_mlx(t_minirt *rt)
     rt->data = mlx_get_data_addr(rt->img, &rt->bpp, &rt->size_line, &rt->endian);
 }
 
-int print_sphere_count(const t_minirt *rt)
-{
-    if (!rt)
-    {
-        fprintf(stderr, "Erro: Estrutura t_minirt nula.\n");
-        return;
-    }
-    return(rt->sp);
-}
-
 int main(int ac, char *av[])
 {
     char    **map;
@@ -56,7 +46,6 @@ int main(int ac, char *av[])
     parse_map(map, &rt);
     if(check_scene(&rt))
          return (1);
-    print_sphere_count(&rt);
     printf("Não teve erro aparentemente\n");
     free_matrix(map);
     init_mlx(&rt);
