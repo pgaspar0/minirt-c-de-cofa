@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/28 08:35:43 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/03/28 12:16:04 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int				check_colors(t_color color);
 int				check_alight(t_alight *ambiente);
 int				check_camera(t_camera *camera);
 int				check_light(t_light *light);
-int				check_sphere(t_sphere *sphere);//, int n);
+int				check_sphere(t_sphere *sphere);
 int				check_plane(t_plane *plane);
 int				check_cylinder(t_cylinder *cylinder);
 int				check_scene(t_minirt *scene);
