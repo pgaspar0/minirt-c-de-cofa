@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:11:18 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/03/27 16:39:47 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:44:58 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ int main(int ac, char *av[])
     parse_map(map, &rt);
     if(check_scene(&rt))
          return (1);
-    printf("Não teve erro aparentemente\n");
     free_matrix(map);
     init_mlx(&rt);
     init_camera(&rt);
     put_scene(&rt);
     mlx_put_image_to_window(rt.con, rt.window, rt.img, 0, 0);
+    //calling func to close the window tht show the code 
     mlx_loop(rt.con);
     return (0);    
 }
