@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/04/09 09:50:58 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:41:06 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,14 @@ int				check_sphere(t_sphere *sphere);
 int				check_plane(t_plane *plane);
 int				check_cylinder(t_cylinder *cylinder);
 int				check_scene(t_minirt *scene);
-int				intersect_cylinder(t_cylinder *cy, t_point direction,
-					t_minirt *rt, double *t);
+// int				intersect_cylinder(t_cylinder *cy, t_point direction,
+// 					t_minirt *rt, double *t);
 int				in_shadow(t_minirt *rt, t_point point, t_point light_dir);
+
+//test functions
+t_color	cylinder_loop(t_minirt *rt, t_point dir, double *closest_t, t_color color);
+int	intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt, double *t);
+
 
 char			**get_map(char *file);
 
@@ -133,11 +138,15 @@ t_color			sphere_loop(t_minirt *rt, t_point direction, double *t,
 t_color			plane_loop(t_minirt *rt, t_point direction, double *t,
 					t_color color);
 t_color			add_light(t_color color, t_minirt *rt, t_point bateu,
-					t_point normal);
+					t_point normal, int i);
 t_color			intersect_scene(t_point direction, t_minirt *rt);
 t_color			colormult(t_color color, double mult);
 t_color			add_alight(t_color color, t_minirt *rt);
-t_color			cylinder_loop(t_minirt *rt, t_point direction, double *t,
-					t_color color);
+// t_color			cylinder_loop(t_minirt *rt, t_point direction, double *t,
+// 					t_color color);
+t_point	get_cylinder_normal2(t_cylinder *cy, t_point hit, int aux);
+t_point	get_cylinder_normal(t_cylinder *cy, t_point hit);
+int	intersect_cap(t_point ro, t_point d, t_point center, t_point normal, double radius, double *t);
+
 
 #endif
