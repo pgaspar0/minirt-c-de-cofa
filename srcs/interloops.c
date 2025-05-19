@@ -34,7 +34,11 @@ t_color	sphere_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 				normal = vecnorm(vecdif(bateu, rt->sphere[i].coordinates));
 				// color = add_light(color, rt, bateu, normal);
 				color = add_light(color, rt, bateu, normal, 0);
-
+				if (rt->in == 0)
+				{
+					rt->mini.type = 0;
+					rt->mini.index = i;
+				}
 			}
 		}
 		i++;
@@ -62,7 +66,11 @@ t_color	plane_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 				normal = rt->plane[i].n_vector;
 				// color = add_light(color, rt, bateu, normal);
 				color = add_light(color, rt, bateu, normal, 0);
-
+				if (rt->in == 0)
+				{
+					rt->mini.type = 1;
+					rt->mini.index = i;
+				}
 			}
 		}
 		i++;
