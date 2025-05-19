@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vexmanip.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:41:14 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/03/06 15:27:44 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/05/20 00:08:15 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,33 @@ t_point	vecmult(t_point u, t_point v)
 	w.y = u.y * v.y;
 	w.z = u.z * v.z;
 	return (w);
+}
+t_point	rotate_x(t_point u, double angle)
+{
+	t_point	v;
+
+	v.x = u.x;
+	v.y = u.y * cos(angle) - u.z * sin(angle);
+	v.z = u.y * sin(angle) + u.z * cos(angle);
+	return (v);
+}
+
+t_point	rotate_y(t_point u, double angle)
+{
+	t_point	v;
+
+	v.x = u.x * cos(angle) + u.z * sin(angle);
+	v.y = u.y;
+	v.z = -u.x * sin(angle) + u.z * cos(angle);
+	return (v);
+}
+
+t_point	rotate_z(t_point u, double angle)
+{
+	t_point	v;
+
+	v.x = u.x * cos(angle) - u.y * sin(angle);
+	v.y = u.x * sin(angle) + u.y * cos(angle);
+	v.z = u.z;
+	return (v);
 }

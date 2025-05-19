@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:11:18 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/04/08 17:44:58 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/05/20 00:26:15 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,114 @@ int keys(int keycode, void *param)
         else if (rt->mini.type == 4)
         {
             rt->camera.coordinates.z -= 0.5;
+            i = 0;
+        }
+    }
+    if (keycode == XK_w || keycode == XK_W)
+    {
+        if (rt->mini.type == 1)
+        {
+            rt->plane[rt->mini.index].n_vector = rotate_y(rt->plane[rt->mini.index].n_vector, 0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 3)
+        {
+            rt->light.coordinates = rotate_y(rt->light.coordinates, 0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 4)
+        {
+            rt->camera.coordinates = rotate_y(rt->camera.o_vector, 0.1);
+            i = 0;
+        }
+    }
+    if (keycode == XK_s || keycode == XK_S)
+    {
+        if (rt->mini.type == 1)
+        {
+            rt->plane[rt->mini.index].n_vector = rotate_y(rt->plane[rt->mini.index].n_vector, -0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 3)
+        {
+            rt->light.coordinates = rotate_y(rt->light.coordinates, -0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 4)
+        {
+            rt->camera.coordinates = rotate_y(rt->camera.o_vector, -0.1);
+            i = 0;
+        }
+    }
+    if (keycode == XK_a || keycode == XK_A)
+    {
+        if (rt->mini.type == 1)
+        {
+            rt->plane[rt->mini.index].n_vector = rotate_x(rt->plane[rt->mini.index].n_vector, 0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 3)
+        {
+            rt->light.coordinates = rotate_x(rt->light.coordinates, 0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 4)
+        {
+            rt->camera.coordinates = rotate_x(rt->camera.o_vector, 0.1);
+            i = 0;
+        }
+    }
+    if (keycode == XK_d || keycode == XK_D)
+    {
+        if (rt->mini.type == 1)
+        {
+            rt->plane[rt->mini.index].n_vector = rotate_x(rt->plane[rt->mini.index].n_vector, -0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 3)
+        {
+            rt->light.coordinates = rotate_x(rt->light.coordinates, -0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 4)
+        {
+            rt->camera.coordinates = rotate_x(rt->camera.o_vector, -0.1);
+            i = 0;
+        }
+    }
+    if (keycode == XK_q || keycode == XK_Q)
+    {
+        if (rt->mini.type == 1)
+        {
+            rt->plane[rt->mini.index].n_vector = rotate_z(rt->plane[rt->mini.index].n_vector, 0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 3)
+        {
+            rt->light.coordinates = rotate_z(rt->light.coordinates, 0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 4)
+        {
+            rt->camera.coordinates = rotate_z(rt->camera.o_vector, 0.1);
+            i = 0;
+        }
+    }
+    if (keycode == XK_e || keycode == XK_E)
+    {
+        if (rt->mini.type == 1)
+        {
+            rt->plane[rt->mini.index].n_vector = rotate_z(rt->plane[rt->mini.index].n_vector, -0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 3)
+        {
+            rt->light.coordinates = rotate_z(rt->light.coordinates, -0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 4)
+        {
+            rt->camera.coordinates = rotate_z(rt->camera.o_vector, -0.1);
             i = 0;
         }
     }
