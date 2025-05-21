@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:11:18 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/05/20 00:26:15 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/05/21 20:10:23 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,11 @@ int keys(int keycode, void *param)
             rt->plane[rt->mini.index].coordinates.y += 0.5;
             i = 0;
         }
+        else if (rt->mini.type == 2)
+        {
+            rt->cylinder[rt->mini.index].coordinates.y += 0.5;
+            i = 0;
+        }
         else if (rt->mini.type == 3)
         {
             rt->light.coordinates.y += 0.5;
@@ -111,6 +116,11 @@ int keys(int keycode, void *param)
         else if (rt->mini.type == 1)
         {
             rt->plane[rt->mini.index].coordinates.y -= 0.5;
+            i = 0;
+        }
+        else if (rt->mini.type == 2)
+        {
+            rt->cylinder[rt->mini.index].coordinates.y -= 0.5;
             i = 0;
         }
         else if (rt->mini.type == 3)
@@ -136,6 +146,11 @@ int keys(int keycode, void *param)
             rt->plane[rt->mini.index].coordinates.x += 0.5;
             i = 0;
         }
+        else if (rt->mini.type == 2)
+        {
+            rt->cylinder[rt->mini.index].coordinates.x += 0.5;
+            i = 0;
+        }
         else if (rt->mini.type == 3)
         {
             rt->light.coordinates.x += 0.5;
@@ -157,6 +172,11 @@ int keys(int keycode, void *param)
         else if (rt->mini.type == 1)
         {
             rt->plane[rt->mini.index].coordinates.x -= 0.5;
+            i = 0;
+        }
+        else if (rt->mini.type == 2)
+        {
+            rt->cylinder[rt->mini.index].coordinates.x -= 0.5;
             i = 0;
         }
         else if (rt->mini.type == 3)
@@ -182,6 +202,11 @@ int keys(int keycode, void *param)
             rt->plane[rt->mini.index].coordinates.z += 0.5;
             i = 0;
         }
+        else if (rt->mini.type == 2)
+        {
+            rt->cylinder[rt->mini.index].coordinates.z += 0.5;
+            i = 0;
+        }
         else if (rt->mini.type == 3)
         {
             rt->light.coordinates.z += 0.5;
@@ -205,6 +230,11 @@ int keys(int keycode, void *param)
             rt->plane[rt->mini.index].coordinates.z -= 0.5;
             i = 0;
         }
+        else if (rt->mini.type == 2)
+        {
+            rt->cylinder[rt->mini.index].coordinates.z -= 0.5;
+            i = 0;
+        }
         else if (rt->mini.type == 3)
         {
             rt->light.coordinates.z -= 0.5;
@@ -221,6 +251,11 @@ int keys(int keycode, void *param)
         if (rt->mini.type == 1)
         {
             rt->plane[rt->mini.index].n_vector = rotate_y(rt->plane[rt->mini.index].n_vector, 0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 2)
+        {
+            rt->cylinder[rt->mini.index].a_vector = rotate_y(rt->cylinder[rt->mini.index].a_vector, 0.1);
             i = 0;
         }
         else if (rt->mini.type == 3)
@@ -241,6 +276,11 @@ int keys(int keycode, void *param)
             rt->plane[rt->mini.index].n_vector = rotate_y(rt->plane[rt->mini.index].n_vector, -0.1);
             i = 0;
         }
+        else if (rt->mini.type == 2)
+        {
+            rt->cylinder[rt->mini.index].a_vector = rotate_y(rt->cylinder[rt->mini.index].a_vector, -0.1);
+            i = 0;
+        }
         else if (rt->mini.type == 3)
         {
             rt->light.coordinates = rotate_y(rt->light.coordinates, -0.1);
@@ -257,6 +297,11 @@ int keys(int keycode, void *param)
         if (rt->mini.type == 1)
         {
             rt->plane[rt->mini.index].n_vector = rotate_x(rt->plane[rt->mini.index].n_vector, 0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 2)
+        {
+            rt->cylinder[rt->mini.index].a_vector = rotate_x(rt->cylinder[rt->mini.index].a_vector, 0.1);
             i = 0;
         }
         else if (rt->mini.type == 3)
@@ -277,6 +322,11 @@ int keys(int keycode, void *param)
             rt->plane[rt->mini.index].n_vector = rotate_x(rt->plane[rt->mini.index].n_vector, -0.1);
             i = 0;
         }
+        else if (rt->mini.type == 2)
+        {
+            rt->cylinder[rt->mini.index].a_vector = rotate_x(rt->cylinder[rt->mini.index].a_vector, -0.1);
+            i = 0;
+        }
         else if (rt->mini.type == 3)
         {
             rt->light.coordinates = rotate_x(rt->light.coordinates, -0.1);
@@ -295,6 +345,11 @@ int keys(int keycode, void *param)
             rt->plane[rt->mini.index].n_vector = rotate_z(rt->plane[rt->mini.index].n_vector, 0.1);
             i = 0;
         }
+        else if (rt->mini.type == 2)
+        {
+            rt->cylinder[rt->mini.index].a_vector = rotate_z(rt->cylinder[rt->mini.index].a_vector, 0.1);
+            i = 0;
+        }
         else if (rt->mini.type == 3)
         {
             rt->light.coordinates = rotate_z(rt->light.coordinates, 0.1);
@@ -311,6 +366,11 @@ int keys(int keycode, void *param)
         if (rt->mini.type == 1)
         {
             rt->plane[rt->mini.index].n_vector = rotate_z(rt->plane[rt->mini.index].n_vector, -0.1);
+            i = 0;
+        }
+        else if (rt->mini.type == 2)
+        {
+            rt->cylinder[rt->mini.index].a_vector = rotate_z(rt->cylinder[rt->mini.index].a_vector, -0.1);
             i = 0;
         }
         else if (rt->mini.type == 3)

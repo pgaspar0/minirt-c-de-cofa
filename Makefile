@@ -3,6 +3,8 @@ NAME = minirt
 FLAGS = -Wall -Wextra -Werror
 SRCS =  ./srcs/interloops.c ./srcs/lightapp.c ./srcs/intersections.c ./srcs/hfuncs.c ./srcs/tracing.c ./srcs/minirt.c ./srcs/camera.c ./srcs/parse.c ./srcs/vexmanip.c ./srcs/verifications.c
 OBJS = ${SRCS:.c=.o}
+BLUE = \033[1;36m
+RESET = \033[0m
 
 .c.o:
 	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
@@ -11,6 +13,8 @@ ${NAME}: ${OBJS}
 	@make -s -C libs/libft MAKEFLAGS=-silent
 	@make -s -C libs/minilibx-linux MAKEFLAGS=-silent
 	${CC} ${FLAGS} ${OBJS} -o ${NAME} -L./libs/libft -lft -L./libs/minilibx-linux -lmlx -lXext -lX11 -lm 
+	@clear
+	@echo "$(BLUE)$(NAME) "is ready to go" $(RESET)"
 
 all: ${NAME}
 

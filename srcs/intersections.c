@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:28:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/05/02 11:55:07 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/05/21 19:50:38 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ t_color	intersect_scene(t_point direction, t_minirt *rt)
 	color = sphere_loop(rt, direction, t, color);
 	color = plane_loop(rt, direction, t, color);
 	color = cylinder_loop(rt, direction, t, color);
-	// color
 	// color = cylinder_loop(rt, direction, t);
 	return (color);
 }

@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:39:50 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/05/06 10:56:59 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/05/21 20:21:34 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,15 +321,17 @@ t_color	cylinder_loop(t_minirt *rt, t_point dir, double *closest_t, t_color colo
 	{
 		if (intersect_cylinder(&rt->cylinder[i], dir, rt, &t))
 		{
-			// if (t > 0.001 && t < rt->closest && (t < closest_t[0]))// || (entrou == 0))
-			// if (t > 0.001 && t < rt->closest)// && (t < closest_t[0]))
 			if (t > 0.001 && t < rt->closest&& t < t_global)
 			{
 				t_global = t;
-				// entrou = 1;
 				closest_t[0] = t;
 				closest_i = i;
 				color = rt->cylinder[i].color;
+				if (rt->in == 0)
+				{
+					rt->mini.type = 2;
+					rt->mini.index = i;
+				}
 			}
 		}
 		// Parâmetros comuns
@@ -348,6 +350,11 @@ t_color	cylinder_loop(t_minirt *rt, t_point dir, double *closest_t, t_color colo
 				closest_i = i;
 				color = rt->cylinder[i].color;
 				aux = 1;
+				// if (rt->in == 0)
+				// {
+				// 	rt->mini.type = 2;
+				// 	rt->mini.index = i;
+				// }
 			}
 		}
 		// Tampa inferior
@@ -364,6 +371,11 @@ t_color	cylinder_loop(t_minirt *rt, t_point dir, double *closest_t, t_color colo
 				closest_i = i;
 				color = rt->cylinder[i].color;
 				aux = 1;
+				// if (rt->in == 0)
+				// {
+				// 	rt->mini.type = 2;
+				// 	rt->mini.index = i;
+				// }
 			}
 		}
 		entrou = 0;
@@ -379,6 +391,11 @@ t_color	cylinder_loop(t_minirt *rt, t_point dir, double *closest_t, t_color colo
 		t_point hit_point = vecsoma(ro, dir_scaled);
 		t_point normal = get_cylinder_normal(&rt->cylinder[closest_i], hit_point);
 		color = add_light(color, rt, hit_point, normal, aux);
+		// if (rt->in == 0)
+		// {
+		// 	rt->mini.type = 2;
+		// 	rt->mini.index = i;
+		// }
 	}
 	return (color);
 }
