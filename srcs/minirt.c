@@ -66,6 +66,222 @@ int mouses(int button, int x, int y, void *param)
     return (0);
 }
 
+void    transy(t_minirt *rt, double val)
+{
+    if (rt->mini.type == 0)
+        rt->sphere[rt->mini.index].coordinates.y += val;
+    else if (rt->mini.type == 1)
+        rt->plane[rt->mini.index].coordinates.y += val;
+    else if (rt->mini.type == 2)
+        rt->cylinder[rt->mini.index].coordinates.y += val;
+    else if (rt->mini.type == 3)
+        rt->light.coordinates.y += val;
+    else if (rt->mini.type == 4)
+        rt->camera.coordinates.y += val;
+}
+
+void    transx(t_minirt *rt, double val)
+{
+    if (rt->mini.type == 0)
+        rt->sphere[rt->mini.index].coordinates.x += val;
+    else if (rt->mini.type == 1)
+        rt->plane[rt->mini.index].coordinates.x += val;
+    else if (rt->mini.type == 2)
+        rt->cylinder[rt->mini.index].coordinates.x += val;
+    else if (rt->mini.type == 3)
+        rt->light.coordinates.x += val;
+    else if (rt->mini.type == 4)
+        rt->camera.coordinates.x += val;
+}
+void    transz(t_minirt *rt, double val)
+{
+    if (rt->mini.type == 0)
+        rt->sphere[rt->mini.index].coordinates.z += val;
+    else if (rt->mini.type == 1)
+        rt->plane[rt->mini.index].coordinates.z += val;
+    else if (rt->mini.type == 2)
+        rt->cylinder[rt->mini.index].coordinates.z += val;
+    else if (rt->mini.type == 3)
+        rt->light.coordinates.z += val;
+    else if (rt->mini.type == 4)
+        rt->camera.coordinates.z += val;
+}
+
+void    up_check(t_minirt *rt, int *i)
+{
+    transy(rt, 0.5);
+    if (rt->mini.type != -1)
+        *i = 0;
+}
+void    down_check(t_minirt *rt, int *i)
+{
+    transy(rt, -0.5);
+    if (rt->mini.type != -1)
+        *i = 0;
+}
+void    left_check(t_minirt *rt, int *i)
+{
+    transx(rt, -0.5);
+    if (rt->mini.type != -1)
+        *i = 0;
+}
+void    right_check(t_minirt *rt, int *i)
+{
+    transx(rt, 0.5);
+    if (rt->mini.type != -1)
+        *i = 0;
+}
+void    i_check(t_minirt *rt, int *i)
+{
+    transz(rt, 0.5);
+    if (rt->mini.type != -1)
+        *i = 0;
+}
+void    k_check(t_minirt *rt, int *i)
+{
+    transz(rt, -0.5);
+    if (rt->mini.type != -1)
+        *i = 0;
+}
+void    w_check(t_minirt *rt, int *i)
+{
+    if (rt->mini.type == 1)
+    {
+        rt->plane[rt->mini.index].n_vector = rotate_y(rt->plane[rt->mini.index].n_vector, 0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 2)
+    {
+        rt->cylinder[rt->mini.index].a_vector = rotate_y(rt->cylinder[rt->mini.index].a_vector, 0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 3)
+    {
+        rt->light.coordinates = rotate_y(rt->light.coordinates, 0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 4)
+    {
+        rt->camera.o_vector = rotate_y(rt->camera.o_vector, 0.5);
+        *i = 0;
+    }
+}
+void    s_check(t_minirt *rt, int *i)
+{
+    if (rt->mini.type == 1)
+    {
+        rt->plane[rt->mini.index].n_vector = rotate_y(rt->plane[rt->mini.index].n_vector, -0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 2)
+    {
+        rt->cylinder[rt->mini.index].a_vector = rotate_y(rt->cylinder[rt->mini.index].a_vector, -0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 3)
+    {
+        rt->light.coordinates = rotate_y(rt->light.coordinates, -0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 4)
+    {
+        rt->camera.o_vector = rotate_y(rt->camera.o_vector, -0.5);
+        *i = 0;
+    }
+}
+void    a_check(t_minirt *rt, int *i)
+{
+    if (rt->mini.type == 1)
+    {
+        rt->plane[rt->mini.index].n_vector = rotate_x(rt->plane[rt->mini.index].n_vector, 0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 2)
+    {
+        rt->cylinder[rt->mini.index].a_vector = rotate_x(rt->cylinder[rt->mini.index].a_vector, 0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 3)
+    {
+        rt->light.coordinates = rotate_x(rt->light.coordinates, 0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 4)
+    {
+        rt->camera.o_vector = rotate_x(rt->camera.o_vector, 0.5);
+        *i = 0;
+    }
+}
+void    d_check(t_minirt *rt, int *i)
+{
+    if (rt->mini.type == 1)
+    {
+        rt->plane[rt->mini.index].n_vector = rotate_x(rt->plane[rt->mini.index].n_vector, -0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 2)
+    {
+        rt->cylinder[rt->mini.index].a_vector = rotate_x(rt->cylinder[rt->mini.index].a_vector, -0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 3)
+    {
+        rt->light.coordinates = rotate_x(rt->light.coordinates, -0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 4)
+    {
+        rt->camera.o_vector = rotate_x(rt->camera.o_vector, -0.5);
+        *i = 0;
+    }
+}
+void    q_check(t_minirt *rt, int *i)
+{
+    if (rt->mini.type == 1)
+    {
+        rt->plane[rt->mini.index].n_vector = rotate_z(rt->plane[rt->mini.index].n_vector, 0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 2)
+    {
+        rt->cylinder[rt->mini.index].a_vector = rotate_z(rt->cylinder[rt->mini.index].a_vector, 0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 3)
+    {
+        rt->light.coordinates = rotate_z(rt->light.coordinates, 0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 4)
+    {
+        rt->camera.o_vector = rotate_z(rt->camera.o_vector, 0.5);
+        *i = 0;
+    }
+}
+void    e_check(t_minirt *rt, int *i)
+{
+    if (rt->mini.type == 1)
+    {
+        rt->plane[rt->mini.index].n_vector = rotate_z(rt->plane[rt->mini.index].n_vector, -0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 2)
+    {
+        rt->cylinder[rt->mini.index].a_vector = rotate_z(rt->cylinder[rt->mini.index].a_vector, -0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 3)
+    {
+        rt->light.coordinates = rotate_z(rt->light.coordinates, -0.1);
+        *i = 0;
+    }
+    else if (rt->mini.type == 4)
+    {
+        rt->camera.o_vector = rotate_z(rt->camera.o_vector, -0.5);
+        *i = 0;
+    }
+}
+
 int keys(int keycode, void *param)
 {
     t_minirt    *rt;
@@ -79,311 +295,29 @@ int keys(int keycode, void *param)
         exit(EXIT_SUCCESS);
     }
     if (keycode == XK_Up)
-    {
-        if (rt->mini.type == 0)
-        {
-            rt->sphere[rt->mini.index].coordinates.y += 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 1)
-        {
-            rt->plane[rt->mini.index].coordinates.y += 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 2)
-        {
-            rt->cylinder[rt->mini.index].coordinates.y += 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 3)
-        {
-            rt->light.coordinates.y += 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 4)
-        {
-            rt->camera.coordinates.y += 0.5;
-            i = 0;
-        }
-    }
+        up_check(rt, &i);
     if (keycode == XK_Down)
-    {
-        if (rt->mini.type == 0)
-        {
-            rt->sphere[rt->mini.index].coordinates.y -= 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 1)
-        {
-            rt->plane[rt->mini.index].coordinates.y -= 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 2)
-        {
-            rt->cylinder[rt->mini.index].coordinates.y -= 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 3)
-        {
-            rt->light.coordinates.y -= 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 4)
-        {
-            rt->camera.coordinates.y -= 0.5;
-            i = 0;
-        }
-    }
+        down_check(rt, &i);
     if (keycode == XK_Right)
-    {
-        if (rt->mini.type == 0)
-        {
-            rt->sphere[rt->mini.index].coordinates.x += 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 1)
-        {
-            rt->plane[rt->mini.index].coordinates.x += 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 2)
-        {
-            rt->cylinder[rt->mini.index].coordinates.x += 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 3)
-        {
-            rt->light.coordinates.x += 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 4)
-        {
-            rt->camera.coordinates.x += 0.5;
-            i = 0;
-        }
-    }
+        right_check(rt, &i);
     if (keycode == XK_Left)
-    {
-        if (rt->mini.type == 0)
-        {
-            rt->sphere[rt->mini.index].coordinates.x -= 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 1)
-        {
-            rt->plane[rt->mini.index].coordinates.x -= 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 2)
-        {
-            rt->cylinder[rt->mini.index].coordinates.x -= 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 3)
-        {
-            rt->light.coordinates.x -= 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 4)
-        {
-            rt->camera.coordinates.x -= 0.5;
-            i = 0;
-        }
-    }
+        left_check(rt, &i);
     if (keycode == XK_i || keycode == XK_I)
-    {
-        if (rt->mini.type == 0)
-        {
-            rt->sphere[rt->mini.index].coordinates.z += 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 1)
-        {
-            rt->plane[rt->mini.index].coordinates.z += 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 2)
-        {
-            rt->cylinder[rt->mini.index].coordinates.z += 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 3)
-        {
-            rt->light.coordinates.z += 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 4)
-        {
-            rt->camera.coordinates.z += 0.5;
-            i = 0;
-        }
-    }
+        i_check(rt, &i);
     if (keycode == XK_k || keycode == XK_K)
-    {
-        if (rt->mini.type == 0)
-        {
-            rt->sphere[rt->mini.index].coordinates.z -= 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 1)
-        {
-            rt->plane[rt->mini.index].coordinates.z -= 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 2)
-        {
-            rt->cylinder[rt->mini.index].coordinates.z -= 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 3)
-        {
-            rt->light.coordinates.z -= 0.5;
-            i = 0;
-        }
-        else if (rt->mini.type == 4)
-        {
-            rt->camera.coordinates.z -= 0.5;
-            i = 0;
-        }
-    }
+        k_check(rt, &i);
     if (keycode == XK_w || keycode == XK_W)
-    {
-        if (rt->mini.type == 1)
-        {
-            rt->plane[rt->mini.index].n_vector = rotate_y(rt->plane[rt->mini.index].n_vector, 0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 2)
-        {
-            rt->cylinder[rt->mini.index].a_vector = rotate_y(rt->cylinder[rt->mini.index].a_vector, 0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 3)
-        {
-            rt->light.coordinates = rotate_y(rt->light.coordinates, 0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 4)
-        {
-            rt->camera.coordinates = rotate_y(rt->camera.o_vector, 0.1);
-            i = 0;
-        }
-    }
+        w_check(rt, &i);
     if (keycode == XK_s || keycode == XK_S)
-    {
-        if (rt->mini.type == 1)
-        {
-            rt->plane[rt->mini.index].n_vector = rotate_y(rt->plane[rt->mini.index].n_vector, -0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 2)
-        {
-            rt->cylinder[rt->mini.index].a_vector = rotate_y(rt->cylinder[rt->mini.index].a_vector, -0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 3)
-        {
-            rt->light.coordinates = rotate_y(rt->light.coordinates, -0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 4)
-        {
-            rt->camera.coordinates = rotate_y(rt->camera.o_vector, -0.1);
-            i = 0;
-        }
-    }
+        s_check(rt, &i);
     if (keycode == XK_a || keycode == XK_A)
-    {
-        if (rt->mini.type == 1)
-        {
-            rt->plane[rt->mini.index].n_vector = rotate_x(rt->plane[rt->mini.index].n_vector, 0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 2)
-        {
-            rt->cylinder[rt->mini.index].a_vector = rotate_x(rt->cylinder[rt->mini.index].a_vector, 0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 3)
-        {
-            rt->light.coordinates = rotate_x(rt->light.coordinates, 0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 4)
-        {
-            rt->camera.coordinates = rotate_x(rt->camera.o_vector, 0.1);
-            i = 0;
-        }
-    }
+        a_check(rt, &i);
     if (keycode == XK_d || keycode == XK_D)
-    {
-        if (rt->mini.type == 1)
-        {
-            rt->plane[rt->mini.index].n_vector = rotate_x(rt->plane[rt->mini.index].n_vector, -0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 2)
-        {
-            rt->cylinder[rt->mini.index].a_vector = rotate_x(rt->cylinder[rt->mini.index].a_vector, -0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 3)
-        {
-            rt->light.coordinates = rotate_x(rt->light.coordinates, -0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 4)
-        {
-            rt->camera.coordinates = rotate_x(rt->camera.o_vector, -0.1);
-            i = 0;
-        }
-    }
+        d_check(rt, &i);
     if (keycode == XK_q || keycode == XK_Q)
-    {
-        if (rt->mini.type == 1)
-        {
-            rt->plane[rt->mini.index].n_vector = rotate_z(rt->plane[rt->mini.index].n_vector, 0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 2)
-        {
-            rt->cylinder[rt->mini.index].a_vector = rotate_z(rt->cylinder[rt->mini.index].a_vector, 0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 3)
-        {
-            rt->light.coordinates = rotate_z(rt->light.coordinates, 0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 4)
-        {
-            rt->camera.coordinates = rotate_z(rt->camera.o_vector, 0.1);
-            i = 0;
-        }
-    }
+        q_check(rt, &i);
     if (keycode == XK_e || keycode == XK_E)
-    {
-        if (rt->mini.type == 1)
-        {
-            rt->plane[rt->mini.index].n_vector = rotate_z(rt->plane[rt->mini.index].n_vector, -0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 2)
-        {
-            rt->cylinder[rt->mini.index].a_vector = rotate_z(rt->cylinder[rt->mini.index].a_vector, -0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 3)
-        {
-            rt->light.coordinates = rotate_z(rt->light.coordinates, -0.1);
-            i = 0;
-        }
-        else if (rt->mini.type == 4)
-        {
-            rt->camera.coordinates = rotate_z(rt->camera.o_vector, -0.1);
-            i = 0;
-        }
-    }
+        e_check(rt, &i);
     if (i != -1)
     {
         put_scene(rt);
