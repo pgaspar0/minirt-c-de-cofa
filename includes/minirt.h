@@ -124,6 +124,8 @@ int				check_sphere(t_sphere *sphere);
 int				check_plane(t_plane *plane);
 int				check_cylinder(t_cylinder *cylinder);
 int				check_scene(t_minirt *scene);
+int				keys(int keycode, void *param);
+int				close_des(t_minirt *rt);
 // int				intersect_cylinder(t_cylinder *cy, t_point direction,
 // 					t_minirt *rt, double *t);
 int				in_shadow(t_minirt *rt, t_point point, t_point light_dir);
@@ -135,10 +137,30 @@ int	intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt, double *t);
 
 char			**get_map(char *file);
 
+void			rotx(t_minirt *rt, double val);
+void			roty(t_minirt *rt, double val);
+void			rotz(t_minirt *rt, double val);
+void			transx(t_minirt *rt, double val);
+void			transy(t_minirt *rt, double val);
+void			transz(t_minirt *rt, double val);
+void    		clean_all(t_minirt *rt);
 void			parse_map(char **map, t_minirt *rt);
 void			init_camera(t_minirt *rt);
 void			put_scene(t_minirt *rt);
 void			put_pixel(t_minirt *rt, int x, int y, int color);
+void    		up_check(t_minirt *rt, int *i);
+void    		down_check(t_minirt *rt, int *i);
+void    		left_check(t_minirt *rt, int *i);
+void    		right_check(t_minirt *rt, int *i);
+void    		i_check(t_minirt *rt, int *i);
+void    		k_check(t_minirt *rt, int *i);
+void    		w_check(t_minirt *rt, int *i);
+void    		s_check(t_minirt *rt, int *i);
+void    		a_check(t_minirt *rt, int *i);
+void    		d_check(t_minirt *rt, int *i);
+void    		q_check(t_minirt *rt, int *i);
+void    		e_check(t_minirt *rt, int *i);
+
 
 t_color			add_dlight(t_minirt *rt, t_color color, t_color old_color,
 					t_point bateu, t_point normal);
