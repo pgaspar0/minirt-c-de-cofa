@@ -37,11 +37,8 @@ int	main(int ac, char *av[])
 	char		**map;
 	t_minirt	rt;
 
-	if (ac != 2)
-	{
-		printf("Invalid number of arguments!\n");
-		return (0);
-	}
+	if (!initial_checks(ac, av))
+        return (0);
 	map = get_map(av[1]);
 	if (!map)
 		return (0);

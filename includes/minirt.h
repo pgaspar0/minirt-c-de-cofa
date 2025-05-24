@@ -19,6 +19,9 @@
 # include "../libs/libft/libft.h"
 # include "../libs/minilibx-linux/mlx.h"
 # include "./vex.h"
+# include <errno.h>
+# include <stdlib.h>
+# include <unistd.h>
 # include <X11/keysym.h>
 
 typedef struct s_color
@@ -124,6 +127,9 @@ int				check_sphere(t_sphere *sphere);
 int				check_plane(t_plane *plane);
 int				check_cylinder(t_cylinder *cylinder);
 int				check_scene(t_minirt *scene);
+int				initial_checks(int ac, char *av[]);
+int				is_bad_file_name(char *file);
+int				is_directory(const char *file);
 int				mouses(int button, int x, int y, void *param);
 int				keys(int keycode, void *param);
 int				close_des(t_minirt *rt);
