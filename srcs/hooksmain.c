@@ -60,3 +60,26 @@ int keys(int keycode, void *param)
     }
     return (0);
 }
+
+int mouses(int button, int x, int y, void *param)
+{
+    t_minirt *rt;
+    t_point	pixel;
+	t_point	direction;
+
+    rt = (t_minirt *) param;
+    if (button == 1)
+    {
+        rt->in = 0;
+		pixel = get_pixel(x, y, rt);
+        direction = vecdif(pixel, rt->camera.coordinates);
+		direction = vecnorm(direction);
+		intersect_scene(direction, rt);
+        rt->in = -1;
+    }
+    else if (button == 2)
+        rt->mini.type = 4;
+    else if (button == 3)
+        rt->mini.type = 3;
+    return (0);
+}

@@ -124,6 +124,7 @@ int				check_sphere(t_sphere *sphere);
 int				check_plane(t_plane *plane);
 int				check_cylinder(t_cylinder *cylinder);
 int				check_scene(t_minirt *scene);
+int				mouses(int button, int x, int y, void *param);
 int				keys(int keycode, void *param);
 int				close_des(t_minirt *rt);
 // int				intersect_cylinder(t_cylinder *cy, t_point direction,
