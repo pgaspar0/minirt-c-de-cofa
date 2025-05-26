@@ -28,7 +28,8 @@ void	init_camera(t_minirt *rt)
 	rt->p_first = vecsoma(rt->p_first, vecprodesc(rt->up, rt->viewport_height / 2));
 	rt->psizex = rt->viewport_width / WIDTH;
 	rt->psizey = rt->viewport_height / HEIGHT;
-	rt->mini.type = -1;
+	if (rt->mini.type != 4)
+		rt->mini.type = -1;
 	rt->mini.index = -1;
 	rt->in = -1;
 }
