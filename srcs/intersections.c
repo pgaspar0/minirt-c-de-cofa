@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:28:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/05/21 19:50:38 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:26:19 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,37 +61,10 @@ t_color	intersect_scene(t_point direction, t_minirt *rt)
 	color = sphere_loop(rt, direction, t, color);
 	color = plane_loop(rt, direction, t, color);
 	color = cylinder_loop(rt, direction, t, color);
+	// color
 	// color = cylinder_loop(rt, direction, t);
 	return (color);
 }
-
-// int	intersect_cylinder(t_cylinder *cy, t_point direction, t_minirt *rt,
-// 		double *t)
-// {
-// 	t_point	oc;
-// 	t_point	d;
-// 	t_point	v;
-// 	double	a;
-// 	double	b;
-// 	double	c;
-// 	double	delta;
-
-// 	v = vecnorm(cy->a_vector);
-// 	oc = vecdif(rt->camera.coordinates, cy->coordinates);
-// 	d = direction;
-// 	a = escprod(vecdif(d, vecprodesc(v, escprod(d, v))), vecdif(d, vecprodesc(v,
-// 					escprod(d, v))));
-// 	b = 2 * escprod(vecdif(d, vecprodesc(v, escprod(d, v))), vecdif(oc,
-// 				vecprodesc(v, escprod(oc, v))));
-// 	c = escprod(vecdif(oc, vecprodesc(v, escprod(oc, v))), vecdif(oc,
-// 				vecprodesc(v, escprod(oc, v)))) - (cy->radius * cy->radius);
-// 	delta = (b * b) - (4 * a * c);
-// 	if (delta < 0)
-// 		return (0);
-// 	t[0] = (-b - sqrt(delta)) / (2 * a);
-// 	t[1] = (-b + sqrt(delta)) / (2 * a);
-// 	return (1);
-// }
 
 int	intersect_cap(t_point ro, t_point d, t_point center, t_point normal, double radius, double *t)
 {
@@ -169,7 +142,7 @@ int	intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt, double *t)
 		{
 			closest_t = t_cap_top;
 			hit_point = vecsoma(ro, vecprodesc(d, t_cap_top));
-			normal = get_cylinder_normal(cy, hit_point);
+			normal = get_cylinder_normal(cy, hit_point, 0.0, 0.0);
 			hit = 1;
 		}
 	}
@@ -191,67 +164,3 @@ int	intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt, double *t)
 	}
 	return (0);
 }
-
-
-// Interseção com a lateral de um cilindro finito
-// int	intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt, double *t)
-// {
-// 	t_point	ro;
-// 	t_point	axis;
-// 	t_point	d;
-// 	t_point	d_proj;
-// 	t_point	oc_proj;
-// 	t_point	d_perp;
-// 	t_point	oc_perp;
-// 	double	a;
-// 	double	b;
-// 	double	c;
-// 	double	delta;
-// 	t_point	hit_point;
-// 	double	proj_len;
-
-// 	ro = rt->camera.coordinates;
-// 	t_point oc = vecdif(ro, cy->coordinates); // ro - centro do cilindro
-// 	axis = vecnorm(cy->a_vector);
-// 	d = dir;
-// 	d_proj = vecprodesc(axis, escprod(d, axis));
-// 	oc_proj = vecprodesc(axis, escprod(oc, axis));
-// 	d_perp = vecdif(d, d_proj);
-// 	oc_perp = vecdif(oc, oc_proj);
-// 	a = escprod(d_perp, d_perp);
-// 	b = 2 * escprod(d_perp, oc_perp);
-// 	c = escprod(oc_perp, oc_perp) - cy->radius * cy->radius;
-// 	delta = b * b - 4 * a * c;
-// 	double t0, t1, tmp;
-// 	if (delta < 0)
-// 		return (0);
-// 	t0 = (-b - sqrt(delta)) / (2 * a);
-// 	t1 = (-b + sqrt(delta)) / (2 * a);
-// 	if (t0 > t1)
-// 	{
-// 		tmp = t0;
-// 		t0 = t1;
-// 		t1 = tmp;
-// 	}
-// 	// Testa t0
-// 	hit_point = vecsoma(ro, vecprodesc(d, t0));
-// 	// proj_len = escprod(vecdif(hit_point, cy->coordinates), axis);
-// 	// if (proj_len >= 0 && proj_len <= cy->height)
-// 	proj_len = escprod(vecdif(hit_point, cy->coordinates), axis);
-// 	if (proj_len >= -cy->height / 2 && proj_len <= cy->height / 2)
-// 	{
-// 		t[0] = t0;
-// 		return (1);
-// 	}
-// 	// Testa t1 se t0 estiver fora do cilindro
-// 	hit_point = vecsoma(ro, vecprodesc(d, t1));
-// 	// proj_len = escprod(vecdif(hit_point, cy->coordinates), axis);
-// 	// if (proj_len >= 0 && proj_len <= cy->height)
-// 	proj_len = escprod(vecdif(hit_point, cy->coordinates), axis);
-// 	if (proj_len >= -cy->height / 2 && proj_len <= cy->height / 2)
-// 	{
-// 		t[0] = t1;
-// 		return (1);
-// 	}
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/01 11:41:06 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/05/26 19:42:56 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,18 @@ typedef struct	s_minielem
 	int	type;
 	int	index;
 }	t_minielem;
+
+typedef struct s_cylinder_state
+{
+	t_minirt	*rt;
+	t_point		dir;
+	t_color		color;
+	double		t;
+	double		*closest_t;
+	int			closest_i;
+	double		t_global;
+	int			aux;
+}				t_cylinder_state;
 
 typedef struct s_minirt
 {
@@ -183,8 +195,9 @@ t_color			add_alight(t_color color, t_minirt *rt);
 // t_color			cylinder_loop(t_minirt *rt, t_point direction, double *t,
 // 					t_color color);
 t_point	get_pixel(int i, int j, t_minirt *rt);
-t_point	get_cylinder_normal2(t_cylinder *cy, t_point hit, int aux);
-t_point	get_cylinder_normal(t_cylinder *cy, t_point hit);
+// t_point	get_cylinder_normal2(t_cylinder *cy, t_point hit, int aux);
+// t_point	get_cylinder_normal(t_cylinder *cy, t_point hit);
+t_point	get_cylinder_normal(t_cylinder *cy, t_point hit, double dist_top, double dist_bottom);
 int	intersect_cap(t_point ro, t_point d, t_point center, t_point normal, double radius, double *t);
 
 
