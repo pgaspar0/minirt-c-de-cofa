@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/26 19:42:56 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:48:14 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include "../libs/libft/libft.h"
 # include "../libs/minilibx-linux/mlx.h"
 # include "./vex.h"
+# include <X11/keysym.h>
 # include <errno.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <X11/keysym.h>
 
 typedef struct s_color
 {
@@ -76,11 +76,11 @@ typedef struct s_cylinder
 	t_color		color;
 }				t_cylinder;
 
-typedef struct	s_minielem
+typedef struct s_minielem
 {
-	int	type;
-	int	index;
-}	t_minielem;
+	int			type;
+	int			index;
+}				t_minielem;
 
 typedef struct s_cylinder_state
 {
@@ -149,10 +149,11 @@ int				close_des(t_minirt *rt);
 // 					t_minirt *rt, double *t);
 int				in_shadow(t_minirt *rt, t_point point, t_point light_dir);
 
-//test functions
-t_color	cylinder_loop(t_minirt *rt, t_point dir, double *closest_t, t_color color);
-int	intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt, double *t);
-
+// test functions
+t_color			cylinder_loop(t_minirt *rt, t_point dir, double *closest_t,
+					t_color color);
+int				intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt,
+					double *t);
 
 char			**get_map(char *file);
 
@@ -162,24 +163,30 @@ void			rotz(t_minirt *rt, double val);
 void			transx(t_minirt *rt, double val);
 void			transy(t_minirt *rt, double val);
 void			transz(t_minirt *rt, double val);
-void    		clean_all(t_minirt *rt);
+void			clean_all(t_minirt *rt);
 void			parse_map(char **map, t_minirt *rt);
 void			init_camera(t_minirt *rt);
 void			put_scene(t_minirt *rt);
 void			put_pixel(t_minirt *rt, int x, int y, int color);
-void    		up_check(t_minirt *rt, int *i);
-void    		down_check(t_minirt *rt, int *i);
-void    		left_check(t_minirt *rt, int *i);
-void    		right_check(t_minirt *rt, int *i);
-void    		i_check(t_minirt *rt, int *i);
-void    		k_check(t_minirt *rt, int *i);
-void    		w_check(t_minirt *rt, int *i);
-void    		s_check(t_minirt *rt, int *i);
-void    		a_check(t_minirt *rt, int *i);
-void    		d_check(t_minirt *rt, int *i);
-void    		q_check(t_minirt *rt, int *i);
-void    		e_check(t_minirt *rt, int *i);
-
+void			up_check(t_minirt *rt, int *i);
+void			down_check(t_minirt *rt, int *i);
+void			left_check(t_minirt *rt, int *i);
+void			right_check(t_minirt *rt, int *i);
+void			i_check(t_minirt *rt, int *i);
+void			k_check(t_minirt *rt, int *i);
+void			w_check(t_minirt *rt, int *i);
+void			s_check(t_minirt *rt, int *i);
+void			a_check(t_minirt *rt, int *i);
+void			d_check(t_minirt *rt, int *i);
+void			q_check(t_minirt *rt, int *i);
+void			e_check(t_minirt *rt, int *i);
+void			check_cylinder_body(t_cylinder_state *s, int i);
+void			check_cap_top(t_cylinder_state *s, int i, t_point axis,
+					t_point ro);
+void			check_cap_bottom(t_cylinder_state *s, int i, t_point axis,
+					t_point ro);
+void			check_caps(t_cylinder_state *s, int i);
+void			final_lighting(t_cylinder_state *s);
 
 t_color			add_dlight(t_minirt *rt, t_color color, t_color old_color,
 					t_point bateu, t_point normal);
@@ -194,11 +201,12 @@ t_color			colormult(t_color color, double mult);
 t_color			add_alight(t_color color, t_minirt *rt);
 // t_color			cylinder_loop(t_minirt *rt, t_point direction, double *t,
 // 					t_color color);
-t_point	get_pixel(int i, int j, t_minirt *rt);
+t_point			get_pixel(int i, int j, t_minirt *rt);
 // t_point	get_cylinder_normal2(t_cylinder *cy, t_point hit, int aux);
 // t_point	get_cylinder_normal(t_cylinder *cy, t_point hit);
-t_point	get_cylinder_normal(t_cylinder *cy, t_point hit, double dist_top, double dist_bottom);
-int	intersect_cap(t_point ro, t_point d, t_point center, t_point normal, double radius, double *t);
-
+t_point			get_cylinder_normal(t_cylinder *cy, t_point hit,
+					double dist_top, double dist_bottom);
+int				intersect_cap(t_point ro, t_point d, t_point center,
+					t_point normal, double radius, double *t);
 
 #endif

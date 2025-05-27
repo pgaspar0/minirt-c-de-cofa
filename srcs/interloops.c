@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:39:50 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/05/26 19:25:43 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:51:23 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,59 @@ t_color	plane_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 	return (color);
 }
 
-// t_color	cylinder_loop(t_minirt *rt, t_point dir, double *closest_t, t_color color)
+t_color	cylinder_loop(t_minirt *rt, t_point dir, double *closest_t,
+		t_color color)
+{
+	t_cylinder_state	s;
+	int					i;
+
+	s.rt = rt;
+	s.dir = dir;
+	s.color = color;
+	s.closest_t = closest_t;
+	s.closest_i = -1;
+	s.t_global = 1e9;
+	s.aux = 0;
+	i = 0;
+	while (i < rt->cy)
+	{
+		s.t = -1;
+		if (intersect_cylinder(&rt->cylinder[i], dir, rt, &s.t))
+		{
+			check_cylinder_body(&s, i);
+		}
+		check_caps(&s, i);
+		i++;
+	}
+	final_lighting(&s);
+	return (s.color);
+}
+
+t_point	get_cylinder_normal(t_cylinder *cy, t_point hit, double dist_top,
+		double dist_bottom)
+{
+	t_point	axis;
+	t_point	c_to_p;
+	t_point	proj;
+	t_point	top;
+	t_point	bottom;
+
+	axis = vecnorm(cy->a_vector);
+	top = vecsoma(cy->coordinates, vecprodesc(axis, cy->height / 2));
+	bottom = vecsoma(cy->coordinates, vecprodesc(axis, -cy->height / 2));
+	dist_top = vecmod(vecdif(hit, top));
+	dist_bottom = vecmod(vecdif(hit, bottom));
+	if (dist_top <= cy->radius + 0.0001)
+		return (axis);
+	if (dist_bottom <= cy->radius + 0.0001)
+		return (vecprodesc(axis, -1));
+	c_to_p = vecdif(hit, cy->coordinates);
+	proj = vecprodesc(axis, escprod(c_to_p, axis));
+	return (vecnorm(vecdif(c_to_p, proj)));
+}
+
+// t_color	cylinder_loop(t_minirt *rt, t_point dir, double *closest_t,
+//		t_color color)
 // {
 // 	double	t;
 // 	int		i;
@@ -111,18 +163,19 @@ t_color	plane_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 // 		// 	t_global = t;
 // 		// 	// cap_top_aux(rt, dir, closest_t, t_cap_top);
 // 		// }
-		
+
 // 		/*axis = vecnorm(rt->cylinder[i].a_vector);
 // 		ro = rt->camera.coordinates;
-		
 
 // 		// Tampa superior
 // 		cap_top = vecsoma(rt->cylinder[i].coordinates,
 // 			vecprodesc(axis, rt->cylinder[i].height / 2));
 // 		double t_cap_top;
-// 		if (intersect_cap(ro, dir, cap_top, axis, rt->cylinder[i].radius, &t_cap_top))
+// 		if (intersect_cap(ro, dir, cap_top, axis, rt->cylinder[i].radius,
+//&t_cap_top))
 // 		{
-// 			if (t_cap_top > 0.001 && t_cap_top < rt->closest && t_cap_top < closest_t[1] && t < t_global)
+// 			if (t_cap_top > 0.001 && t_cap_top < rt->closest
+//				&& t_cap_top < closest_t[1] && t < t_global)
 // 			{
 // 				t_global = t;
 // 				closest_t[1] = t_cap_top;
@@ -139,7 +192,8 @@ t_color	plane_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 // 		if (intersect_cap(ro, dir, cap_bottom, vecprodesc(axis, -1),
 // 				rt->cylinder[i].radius, &t_cap_bottom))
 // 		{
-// 			if (t_cap_bottom > 0.001 && t_cap_bottom < rt->closest && t_cap_bottom < closest_t[1] && t < t_global)
+// 			if (t_cap_bottom > 0.001 && t_cap_bottom < rt->closest
+//				&& t_cap_bottom < closest_t[1] && t < t_global)
 // 			{
 // 				t_global = t;
 // 				closest_t[1] = t_cap_bottom;
@@ -152,15 +206,18 @@ t_color	plane_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 // 	}
 // 	if (rt->closest > t_global && t_global > 0)
 // 	{
-// 		t_point hit_point = vecsoma(rt->camera.coordinates, vecprodesc(dir, t_global));
-// 		t_point normal = get_cylinder_normal(&rt->cylinder[closest_i], hit_point, 0.0, 0.0);
+// 		t_point hit_point = vecsoma(rt->camera.coordinates, vecprodesc(dir,
+//					t_global));
+// 		t_point normal = get_cylinder_normal(&rt->cylinder[closest_i],
+//				hit_point, 0.0, 0.0);
 // 		color = add_light(color, rt, hit_point, normal, aux);
 // 	}
 // 	return (color);
 // }
 
 // a função do cylinder_loop que funciona
-// t_color	cylinder_loop(t_minirt *rt, t_point dir, double *closest_t, t_color color)
+// t_color	cylinder_loop(t_minirt *rt, t_point dir, double *closest_t,
+//		t_color color)
 // {
 // 	double	t = -1;
 // 	int		i;
@@ -176,7 +233,7 @@ t_color	plane_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 // 		{
 //         	// closest_t[0] = cylinder_loop_aux1(t, rt, t_global, i);
 // 			// closest_i = i;
-// 	        // color = rt->cylinder[i].color;
+// 			  // color = rt->cylinder[i].color;
 // 			if (t > 0.001 && t < rt->closest && t < t_global)
 // 			{
 // 				t_global = t;
@@ -197,9 +254,11 @@ t_color	plane_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 // 		t_point cap_top = vecsoma(rt->cylinder[i].coordinates,
 // 			vecprodesc(axis, rt->cylinder[i].height / 2));
 // 		double t_cap_top;
-// 		if (intersect_cap(ro, dir, cap_top, axis, rt->cylinder[i].radius, &t_cap_top))
+// 		if (intersect_cap(ro, dir, cap_top, axis, rt->cylinder[i].radius,
+//				&t_cap_top))
 // 		{
-// 			if (t_cap_top > 0.001 && t_cap_top < rt->closest && t_cap_top < closest_t[1] && t < t_global)
+// 			if (t_cap_top > 0.001 && t_cap_top < rt->closest
+//				&& t_cap_top < closest_t[1] && t < t_global)
 // 			{
 // 				t_global = t;
 // 				closest_t[1] = t_cap_top;
@@ -215,7 +274,8 @@ t_color	plane_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 // 		if (intersect_cap(ro, dir, cap_bottom, vecprodesc(axis, -1),
 // 				rt->cylinder[i].radius, &t_cap_bottom))
 // 		{
-// 			if (t_cap_bottom > 0.001 && t_cap_bottom < rt->closest && t_cap_bottom < closest_t[1] && t < t_global)
+// 			if (t_cap_bottom > 0.001 && t_cap_bottom < rt->closest
+//				&& t_cap_bottom < closest_t[1] && t < t_global)
 // 			{
 // 				t_global = t;
 // 				closest_t[1] = t_cap_bottom;
@@ -233,7 +293,8 @@ t_color	plane_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 // 		t_point ro = rt->camera.coordinates;
 // 		t_point dir_scaled = vecprodesc(dir, t_global);
 // 		t_point hit_point = vecsoma(ro, dir_scaled);
-// 		t_point normal = get_cylinder_normal(&rt->cylinder[closest_i], hit_point);
+// 		t_point normal = get_cylinder_normal(&rt->cylinder[closest_i],
+//				hit_point);
 // 		color = add_light(color, rt, hit_point, normal, aux);
 // 	}
 // 	return (color);
