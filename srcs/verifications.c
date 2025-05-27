@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:53:51 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/03/28 12:16:06 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:54:56 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,47 +24,6 @@ int	check_alight(t_alight *ambiente)
 {
 	return ((ambiente->ratio >= 0.0 && ambiente->ratio <= 1.0)
 		&& check_colors(ambiente->color));
-}
-
-// check camera 3d normalized orientation (-1.0;1.0) and FOV (0-180)
-int	check_camera(t_camera *camera)
-{
-	return ((camera->o_vector.x >= -1.0 && camera->o_vector.x <= 1.0)
-		&& (camera->o_vector.y >= -1.0 && camera->o_vector.y <= 1.0)
-		&& (camera->o_vector.z >= -1.0 && camera->o_vector.z <= 1.0)
-		&& (camera->fov >= 0 && camera->fov <= 180));
-}
-
-// check light brightness ratio (0.0 - 1.0) and colors
-int	check_light(t_light *light)
-{
-	return ((light->ratio >= 0.0 && light->ratio <= 1.0)
-		&& check_colors(light->color));
-}
-
-// check plane 3d normalized vector (-1.0;1.0) and colors
-int	check_plane(t_plane *plane)
-{
-	return ((plane->n_vector.x >= -1.0 && plane->n_vector.x <= 1.0)
-		&& (plane->n_vector.y >= -1.0 && plane->n_vector.y <= 1.0)
-		&& (plane->n_vector.z >= -1.0 && plane->n_vector.z <= 1.0)
-		&& (check_colors(plane->color)));
-}
-
-// check cylinder 3d normalized vector (-1.0;1.0) and colors
-int	check_cylinder(t_cylinder *cylinder)
-{
-	return ((cylinder->a_vector.x >= -1.0 && cylinder->a_vector.x <= 1.0)
-		&& (cylinder->a_vector.y >= -1.0 && cylinder->a_vector.y <= 1.0)
-		&& (cylinder->a_vector.z >= -1.0 && cylinder->a_vector.z <= 1.0)
-		&& (check_colors(cylinder->color)));
-}
-
-int	check_sphere(t_sphere *sphere)
-{
-	if (!check_colors(sphere->color))
-		return (0);
-	return (1);
 }
 
 static int	check_scene2(t_minirt *scene)
