@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/27 19:48:14 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:10:56 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,6 @@ typedef struct s_minielem
 	int			index;
 }				t_minielem;
 
-typedef struct s_cylinder_state
-{
-	t_minirt	*rt;
-	t_point		dir;
-	t_color		color;
-	double		t;
-	double		*closest_t;
-	int			closest_i;
-	double		t_global;
-	int			aux;
-}				t_cylinder_state;
-
 typedef struct s_minirt
 {
 	t_alight	alight;
@@ -126,6 +114,28 @@ typedef struct s_minirt
 	int			in;
 }				t_minirt;
 
+typedef struct s_cylinder_state
+{
+	t_minirt	*rt;
+	t_point		dir;
+	t_color		color;
+	double		t;
+	double		*closest_t;
+	int			closest_i;
+	double		t_global;
+	int			aux;
+}				t_cylinder_state;
+
+typedef struct s_intersection
+{
+	t_point	ro;
+	t_point	axis;
+	t_point	dir;
+	t_point	hit_point;
+	double	closest_t;
+	int		hit;
+}			t_mini_intersect;
+
 int				color_to_int(t_color color);
 int				intersect_sphere(t_sphere *sphere, t_point direction,
 					t_minirt *rt, double *t);
@@ -148,6 +158,8 @@ int				close_des(t_minirt *rt);
 // int				intersect_cylinder(t_cylinder *cy, t_point direction,
 // 					t_minirt *rt, double *t);
 int				in_shadow(t_minirt *rt, t_point point, t_point light_dir);
+float				*get_delta(t_cylinder *cy, t_point d_perp, t_point oc_perp,
+					t_point d);
 
 // test functions
 t_color			cylinder_loop(t_minirt *rt, t_point dir, double *closest_t,
