@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:28:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/05/26 19:26:19 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/05/29 09:05:20 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,11 @@ int	intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt, double *t)
 
 	if (delta >= 0)
 	{
-		t0 = (-b - sqrt(delta)) / (2 * a);
-		t1 = (-b + sqrt(delta)) / (2 * a);
+		t0 = (-b - sqrt(delta)) / (2 * escprod(d_perp, d_perp));
+		t1 = (-b + sqrt(delta)) / (2 * escprod(d_perp, d_perp));
+		float epha[2];
+		*epha = get_delta(cy, d_perp, oc_perp, dir);
+		printf("Já aqui dentro: %f - %f, Agora os de fora: %f - %f\n", t0, t1, epha[0], epha[1]);
 		if (t0 > t1) { tmp = t0; t0 = t1; t1 = tmp; }
 
 		t_point hit_point = vecsoma(ro, vecprodesc(d, t0));
