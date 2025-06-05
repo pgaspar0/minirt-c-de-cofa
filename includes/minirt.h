@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/05/31 13:10:56 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/05 17:52:26 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,23 +118,38 @@ typedef struct s_cylinder_state
 {
 	t_minirt	*rt;
 	t_point		dir;
+	t_point		normal;
 	t_color		color;
 	double		t;
 	double		*closest_t;
-	int			closest_i;
 	double		t_global;
+	double		radius;
+	int			closest_i;
+	int			i;
 	int			aux;
 }				t_cylinder_state;
 
+typedef struct s_vecs
+{
+	double		light_len;
+	t_point		vec1;
+	t_point		vec2;
+}				t_vecs;
+
 typedef struct s_intersection
 {
-	t_point	ro;
-	t_point	axis;
-	t_point	dir;
-	t_point	hit_point;
-	double	closest_t;
-	int		hit;
-}			t_mini_intersect;
+	t_point		ro;
+	t_point		axis;
+	t_point		dir;
+	t_point		hit_point;
+	t_point		normal;
+	double		closest_t;
+	t_point		d_perp;
+	t_point		oc_perp;
+	int			hit;
+	t_minirt	*rt;
+	t_cylinder	*cy;
+}				t_mini_intersect;
 
 int				color_to_int(t_color color);
 int				intersect_sphere(t_sphere *sphere, t_point direction,
@@ -158,7 +173,7 @@ int				close_des(t_minirt *rt);
 // int				intersect_cylinder(t_cylinder *cy, t_point direction,
 // 					t_minirt *rt, double *t);
 int				in_shadow(t_minirt *rt, t_point point, t_point light_dir);
-float				*get_delta(t_cylinder *cy, t_point d_perp, t_point oc_perp,
+float			*get_delta(t_cylinder *cy, t_point d_perp, t_point oc_perp,
 					t_point d);
 
 // test functions
@@ -200,25 +215,38 @@ void			check_cap_bottom(t_cylinder_state *s, int i, t_point axis,
 void			check_caps(t_cylinder_state *s, int i);
 void			final_lighting(t_cylinder_state *s);
 
+// t_color			add_dlight(t_minirt *rt, t_color color, t_color old_color,
+// 					t_point bateu, t_point normal);
 t_color			add_dlight(t_minirt *rt, t_color color, t_color old_color,
-					t_point bateu, t_point normal);
+					t_vecs *vec);
 t_color			sphere_loop(t_minirt *rt, t_point direction, double *t,
 					t_color color);
 t_color			plane_loop(t_minirt *rt, t_point direction, double *t,
 					t_color color);
-t_color			add_light(t_color color, t_minirt *rt, t_point bateu,
-					t_point normal, int i);
+t_color			add_light(t_color color, t_minirt *rt, t_vecs *vec, int i);
+// t_color			add_light(t_color color, t_minirt *rt, t_point bateu,
+// 					t_point normal, int i);
 t_color			intersect_scene(t_point direction, t_minirt *rt);
 t_color			colormult(t_color color, double mult);
 t_color			add_alight(t_color color, t_minirt *rt);
-// t_color			cylinder_loop(t_minirt *rt, t_point direction, double *t,
-// 					t_color color);
 t_point			get_pixel(int i, int j, t_minirt *rt);
-// t_point	get_cylinder_normal2(t_cylinder *cy, t_point hit, int aux);
-// t_point	get_cylinder_normal(t_cylinder *cy, t_point hit);
 t_point			get_cylinder_normal(t_cylinder *cy, t_point hit,
 					double dist_top, double dist_bottom);
-int				intersect_cap(t_point ro, t_point d, t_point center,
-					t_point normal, double radius, double *t);
+int				intersect_cap(t_point ro, t_cylinder_state *s, t_point center,
+					double *t);
+int				intersect_cap2(t_mini_intersect *inter, t_point center,
+					double radius, double *t);
+
+// lightapp_aux.c
+int				in_shadow_sp(int i, t_minirt *rt, double t[2], t_vecs *vec);
+
+// intersection_aux.c
+void			init_t_inter(t_mini_intersect *t_inter, t_cylinder *cy,
+					t_point dir, t_minirt *rt);
+void			intersection_aux(t_mini_intersect *t_inter, double *t0,
+					double *t1);
+void			caps_aux(t_mini_intersect *t_inter, double *t_cap_top,
+					t_point *cap_bottom);
+void			ver_int(t_mini_intersect *inter, t_point cap_bottom);
 
 #endif
