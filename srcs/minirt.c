@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:11:18 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/05/21 20:10:23 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:34:29 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int ac, char *av[])
 	t_minirt	rt;
 
 	if (!initial_checks(ac, av))
-        return (0);
+		return (0);
 	map = get_map(av[1]);
 	if (!map)
 		return (0);

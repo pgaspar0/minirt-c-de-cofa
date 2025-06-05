@@ -6,89 +6,79 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 20:09:39 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/05/31 13:24:54 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/04 17:11:12 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-/*
-
-typedef struct s_intersection
+static double	delta_aux(t_point d_perp, t_point oc_perp, t_cylinder *cy,
+		double *b)
 {
-	t_point	ro;
-	t_point	axis;
-	t_point	dir;
-	t_point	hit_point;
-	double	closest_t;
-	int		hit;
-}			t_mini_intersect;
+	double	a;
+	double	c;
 
-*/
-
-/*
-
-if (delta >= 0)
-	{
-		t0 = (-b - sqrt(delta)) / (2 * escprod(d_perp, d_perp));
-		t1 = (-b + sqrt(delta)) / (2 * escprod(d_perp, d_perp));
-		// float epha[2];
-		// *epha = get_delta(cy, d_perp, oc_perp, dir);
-		// printf("Já aqui dentro: %f - %f, Agora os de fora: %f - %f\n", t0, t1, epha[0], epha[1]);
-		if (t0 > t1) { tmp = t0; t0 = t1; t1 = tmp; }
-
-		hit_point = vecsoma(ro, vecprodesc(d, t0));
-		double proj_len = escprod(vecdif(hit_point, cy->coordinates), axis);
-		if (proj_len >= -cy->height / 2 && proj_len <= cy->height / 2 && t0 > 0.001)
-		{
-			closest_t = t0;
-			hit = 1;
-		}
-		hit_point = vecsoma(ro, vecprodesc(d, t1));
-		proj_len = escprod(vecdif(hit_point, cy->coordinates), axis);
-		if (proj_len >= -cy->height / 2 && proj_len <= cy->height / 2 && t1 > 0.001)
-		{
-			if (!hit || t1 < closest_t)
-			{
-				closest_t = t1;
-				hit = 1;
-			}
-		}
-	}
-
-*/
-
-void	delta()
-{
-	double	t0;
-	double	t1;
-
-	t0 = (-b - sqrt(delta)) / (2 * escprod(d_perp, d_perp));
-	t1 = (-b + sqrt(delta)) / (2 * escprod(d_perp, d_perp));
+	a = escprod(d_perp, d_perp);
+	*b = 2 * escprod(d_perp, oc_perp);
+	c = escprod(oc_perp, oc_perp) - cy->radius * cy->radius;
+	return (*b * *b - 4 * a * c);
 }
 
-// float	*get_delta(t_cylinder *cy, t_point d_perp, t_point oc_perp, t_point d)
-// {
-// 	double	a;
-// 	double	b;
-// 	double	c;
-// 	double	delta;
-// 	double	t[2];
-
-// 	a = escprod(vecdif(d, d_proj), vecdif(d, d_proj));
-// 	b = 2 * escprod(vecdif(d, d_proj), vecdif(oc, oc_proj));
-// 	c = escprod(vecdif(oc, oc_proj), vecdif(oc, oc_proj)) - cy->radius
-// 		* cy->radius;
-// 	delta = b * b - 4 * a * c;
-// 	// t[0] = -1;
-// 	// t[1] = -1;
-// 	t[0] = (-b - sqrt(delta)) / (2 * escprod(vecdif(d, d_proj), vecdif(d,
-// 					d_proj)));
-// 	t[1] = (-b + sqrt(delta)) / (2 * escprod(vecdif(d, d_proj), vecdif(d,
-// 					d_proj)));
-// 	return (t);
-// }
-
-int	intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt, double *t)
+static double	ft_delta(t_mini_intersect *t_inter, double *t0, double *t1)
 {
+	double	b;
+	double	delta;
+	int		tmp;
+
+	delta = delta_aux(t_inter->d_perp, t_inter->oc_perp, t_inter->cy, &b);
+	if (delta >= 0)
+	{
+		*t0 = (-b - sqrt(delta)) / (2 * escprod(t_inter->d_perp,
+					t_inter->d_perp));
+		*t1 = (-b + sqrt(delta)) / (2 * escprod(t_inter->d_perp,
+					t_inter->d_perp));
+		if (t0 > t1)
+		{
+			tmp = *t0;
+			*t0 = *t1;
+			*t1 = tmp;
+		}
+		return (delta);
+	}
+	return (0);
+}
+
+static void	verify_border(t_mini_intersect *t_inter, double *t, int flag)
+{
+	double	proj_len;
+
+	t_inter->hit_point = vecsoma(t_inter->ro, vecprodesc(t_inter->dir, *t));
+	proj_len = escprod(vecdif(t_inter->hit_point, t_inter->cy->coordinates),
+			t_inter->axis);
+	if (proj_len >= -t_inter->cy->height / 2 && proj_len <= t_inter->cy->height
+		/ 2 && *t > 0.001)
+	{
+		if (flag == 0)
+		{
+			t_inter->closest_t = *t;
+			t_inter->hit = 1;
+		}
+		else if ((!t_inter->hit || *t < t_inter->closest_t) && flag == 1)
+		{
+			t_inter->closest_t = *t;
+			t_inter->hit = 1;
+		}
+	}
+}
+
+void	intersection_aux(t_mini_intersect *t_inter, double *t0, double *t1)
+{
+	double	delta;
+
+	delta = ft_delta(t_inter, t0, t1);
+	if (delta >= 0)
+	{
+		verify_border(t_inter, t0, 0);
+		verify_border(t_inter, t1, 1);
+	}
 }

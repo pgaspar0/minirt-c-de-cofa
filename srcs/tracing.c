@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tracing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:30:20 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/03/21 21:38:28 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/06/05 16:38:50 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_point	get_pixel(int i, int j, t_minirt *rt)
 {
 	t_point	pixel;
-	t_point right_part;
+	t_point	right_part;
 	t_point	up_part;
 
 	right_part = vecprodesc(rt->right, i * rt->psizex);

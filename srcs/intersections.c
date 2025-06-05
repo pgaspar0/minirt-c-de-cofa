@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 11:28:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/05/29 09:05:20 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/04 17:31:35 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,114 +55,55 @@ t_color	intersect_scene(t_point direction, t_minirt *rt)
 	double	t[2];
 	t_color	color;
 
-	// t_point	hit_point;
 	rt->closest = 1e9;
 	color = colormult(rt->alight.color, rt->alight.ratio);
 	color = sphere_loop(rt, direction, t, color);
 	color = plane_loop(rt, direction, t, color);
 	color = cylinder_loop(rt, direction, t, color);
-	// color
-	// color = cylinder_loop(rt, direction, t);
 	return (color);
 }
 
-int	intersect_cap(t_point ro, t_point d, t_point center, t_point normal, double radius, double *t)
+int	intersect_cap2(t_mini_intersect *inter, t_point center, double radius,
+		double *t)
 {
-	double denom = escprod(d, normal);
+	double	denom;
+	t_point	oc;
+	double	t_hit;
+	t_point	hit;
+	t_point	dist;
+
+	denom = escprod(inter->dir, inter->normal);
 	if (fabs(denom) < 1e-6)
-		return (0); // Raio paralelo ao plano
-
-	t_point oc = vecdif(center, ro);
-	double t_hit = escprod(oc, normal) / denom;
+		return (0);
+	oc = vecdif(center, inter->ro);
+	t_hit = escprod(oc, inter->normal) / denom;
 	if (t_hit < 0.001)
-		return (0); // Atrás da câmera
-
-	t_point hit = vecsoma(ro, vecprodesc(d, t_hit));
-	t_point dist = vecdif(hit, center);
+		return (0);
+	hit = vecsoma(inter->ro, vecprodesc(inter->dir, t_hit));
+	dist = vecdif(hit, center);
 	if (vecmod(dist) > radius)
-		return (0); // Fora do círculo
-
+		return (0);
 	*t = t_hit;
 	return (1);
 }
 
 int	intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt, double *t)
 {
-	t_point ro = rt->camera.coordinates;
-	t_point axis = vecnorm(cy->a_vector);
-	t_point oc = vecdif(ro, cy->coordinates);
-	t_point d = dir;
+	t_mini_intersect	t_inter;
+	double				t0;
+	double				t1;
+	double				t_cap_top;
+	t_point				cap_bottom;
 
-	t_point d_proj = vecprodesc(axis, escprod(d, axis));
-	t_point oc_proj = vecprodesc(axis, escprod(oc, axis));
-	t_point d_perp = vecdif(d, d_proj);
-	t_point oc_perp = vecdif(oc, oc_proj);
-
-	double a = escprod(d_perp, d_perp);
-	double b = 2 * escprod(d_perp, oc_perp);
-	double c = escprod(oc_perp, oc_perp) - cy->radius * cy->radius;
-	double delta = b * b - 4 * a * c;
-	double t0 = -1, t1 = -1, tmp;
-	double closest_t = -1;
-	int hit = 0;
-	t_point hit_point;
-
-	if (delta >= 0)
+	t0 = -1;
+	t1 = -1;
+	init_t_inter(&t_inter, cy, dir, rt);
+	intersection_aux(&t_inter, &t0, &t1);
+	caps_aux(&t_inter, &t_cap_top, &cap_bottom);
+	ver_int(&t_inter, cap_bottom);
+	if (t_inter.hit)
 	{
-		t0 = (-b - sqrt(delta)) / (2 * escprod(d_perp, d_perp));
-		t1 = (-b + sqrt(delta)) / (2 * escprod(d_perp, d_perp));
-		float epha[2];
-		*epha = get_delta(cy, d_perp, oc_perp, dir);
-		printf("Já aqui dentro: %f - %f, Agora os de fora: %f - %f\n", t0, t1, epha[0], epha[1]);
-		if (t0 > t1) { tmp = t0; t0 = t1; t1 = tmp; }
-
-		t_point hit_point = vecsoma(ro, vecprodesc(d, t0));
-		double proj_len = escprod(vecdif(hit_point, cy->coordinates), axis);
-		if (proj_len >= -cy->height / 2 && proj_len <= cy->height / 2 && t0 > 0.001)
-		{
-			closest_t = t0;
-			hit = 1;
-		}
-		hit_point = vecsoma(ro, vecprodesc(d, t1));
-		proj_len = escprod(vecdif(hit_point, cy->coordinates), axis);
-		if (proj_len >= -cy->height / 2 && proj_len <= cy->height / 2 && t1 > 0.001)
-		{
-			if (!hit || t1 < closest_t)
-			{
-				closest_t = t1;
-				hit = 1;
-			}
-		}
-	}
-	// Testa tampas (cap superior e inferior)
-	double t_cap_top, t_cap_bottom;
-	t_point cap_top = vecsoma(cy->coordinates, vecprodesc(axis, cy->height / 2));
-	t_point cap_bottom = vecsoma(cy->coordinates, vecprodesc(axis, -cy->height / 2));
-	t_point normal = vecnorm(cy->a_vector);
-	if (intersect_cap(ro, d, cap_top, normal, cy->radius, &t_cap_top))
-	{
-		if (t_cap_top > 0.001 && (!hit || t_cap_top < closest_t))
-		{
-			closest_t = t_cap_top;
-			hit_point = vecsoma(ro, vecprodesc(d, t_cap_top));
-			normal = get_cylinder_normal(cy, hit_point, 0.0, 0.0);
-			hit = 1;
-		}
-	}
-	// normal = vecnorm(vecprodesc(cy->a_vector, -1));
-	normal = vecprodesc(vecnorm(cy->a_vector), -1);
-	if (intersect_cap(ro, d, cap_bottom, normal, cy->radius, &t_cap_bottom))
-	{
-		if (t_cap_bottom > 0.001 && (!hit || t_cap_bottom < closest_t))
-		{
-			closest_t = t_cap_bottom;
-			hit_point = vecsoma(ro, vecprodesc(d, t_cap_bottom));
-			hit = 1;
-		}
-	}
-	if (hit)
-	{
-		t[0] = closest_t;
+		t[0] = t_inter.closest_t;
 		return (1);
 	}
 	return (0);
