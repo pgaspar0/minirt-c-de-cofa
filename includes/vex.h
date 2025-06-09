@@ -22,7 +22,6 @@ typedef struct s_point
 	double	z;
 }			t_point;
 
-
 int			is_norm(t_point v);
 
 double		escprod(t_point u, t_point v);

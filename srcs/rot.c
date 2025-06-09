@@ -15,11 +15,11 @@
 void	rotx(t_minirt *rt, double val)
 {
 	if (rt->mini.type == 1)
-		rt->plane[rt->mini.index].n_vector = rotate_x(rt->plane[rt->mini.index].n_vector,
-				val);
+		rt->plane[rt->mini.index].n_vector = rotate_x(
+				rt->plane[rt->mini.index].n_vector, val);
 	else if (rt->mini.type == 2)
-		rt->cylinder[rt->mini.index].a_vector = rotate_x(rt->cylinder[rt->mini.index].a_vector,
-				val);
+		rt->cylinder[rt->mini.index].a_vector = rotate_x(
+				rt->cylinder[rt->mini.index].a_vector, val);
 	else if (rt->mini.type == 3)
 		rt->light.coordinates = rotate_x(rt->light.coordinates, val);
 	else if (rt->mini.type == 4)
@@ -29,11 +29,11 @@ void	rotx(t_minirt *rt, double val)
 void	roty(t_minirt *rt, double val)
 {
 	if (rt->mini.type == 1)
-		rt->plane[rt->mini.index].n_vector = rotate_y(rt->plane[rt->mini.index].n_vector,
-				val);
+		rt->plane[rt->mini.index].n_vector = rotate_y(
+				rt->plane[rt->mini.index].n_vector, val);
 	else if (rt->mini.type == 2)
-		rt->cylinder[rt->mini.index].a_vector = rotate_y(rt->cylinder[rt->mini.index].a_vector,
-				val);
+		rt->cylinder[rt->mini.index].a_vector = rotate_y(
+				rt->cylinder[rt->mini.index].a_vector, val);
 	else if (rt->mini.type == 3)
 		rt->light.coordinates = rotate_y(rt->light.coordinates, val);
 	else if (rt->mini.type == 4)
@@ -43,11 +43,11 @@ void	roty(t_minirt *rt, double val)
 void	rotz(t_minirt *rt, double val)
 {
 	if (rt->mini.type == 1)
-		rt->plane[rt->mini.index].n_vector = rotate_z(rt->plane[rt->mini.index].n_vector,
-				val);
+		rt->plane[rt->mini.index].n_vector = rotate_z(
+				rt->plane[rt->mini.index].n_vector, val);
 	else if (rt->mini.type == 2)
-		rt->cylinder[rt->mini.index].a_vector = rotate_z(rt->cylinder[rt->mini.index].a_vector,
-				val);
+		rt->cylinder[rt->mini.index].a_vector = rotate_z(
+				rt->cylinder[rt->mini.index].a_vector, val);
 	else if (rt->mini.type == 3)
 		rt->light.coordinates = rotate_z(rt->light.coordinates, val);
 	else if (rt->mini.type == 4)

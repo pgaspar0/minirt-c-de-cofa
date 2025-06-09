@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/06/05 17:52:26 by jorcarva         ###   ########.fr       */
+/*   Created: 2025/06/09 17:57:19 by pgaspar           #+#    #+#             */
+/*   Updated: 2025/06/09 17:57:22 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,8 @@ float			*get_delta(t_cylinder *cy, t_point d_perp, t_point oc_perp,
 // test functions
 t_color			cylinder_loop(t_minirt *rt, t_point dir, double *closest_t,
 					t_color color);
+t_color			parse_color(char *color);
+
 int				intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt,
 					double *t);
 
@@ -214,6 +216,12 @@ void			check_cap_bottom(t_cylinder_state *s, int i, t_point axis,
 					t_point ro);
 void			check_caps(t_cylinder_state *s, int i);
 void			final_lighting(t_cylinder_state *s);
+void			parse_sphere(char *line, t_minirt *rt, int index);
+void			parse_plane(char *line, t_minirt *rt, int index);
+void			parse_cylinder(char *line, t_minirt *rt, int index);
+void			parse_alight(char *line, t_minirt *rt);
+void			parse_camera(char *line, t_minirt *rt);
+void			parse_light(char *line, t_minirt *rt);
 
 // t_color			add_dlight(t_minirt *rt, t_color color, t_color old_color,
 // 					t_point bateu, t_point normal);
@@ -232,6 +240,8 @@ t_color			add_alight(t_color color, t_minirt *rt);
 t_point			get_pixel(int i, int j, t_minirt *rt);
 t_point			get_cylinder_normal(t_cylinder *cy, t_point hit,
 					double dist_top, double dist_bottom);
+t_point			parse_point(char *point);
+
 int				intersect_cap(t_point ro, t_cylinder_state *s, t_point center,
 					double *t);
 int				intersect_cap2(t_mini_intersect *inter, t_point center,
