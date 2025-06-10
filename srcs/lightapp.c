@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 19:43:14 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/06/05 17:54:48 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:55:04 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,11 @@ static double	veclen(t_point v)
 int	in_shadow(t_minirt *rt, t_point point, t_point light_dir)
 {
 	double		t[2];
-	t_minirt	*rt_aux;
+	t_minirt	rt_aux;
 	t_vecs		vec;
 	int			i;
 
 	i = 0;
-	rt_aux = (t_minirt *)malloc(sizeof(t_minirt));
 	vec.vec1 = vecsoma(point, vecprodesc(light_dir, 0.001));
 	vec.light_len = veclen(vecdif(rt->light.coordinates, point));
 	vec.vec2 = light_dir;
@@ -82,8 +81,8 @@ int	in_shadow(t_minirt *rt, t_point point, t_point light_dir)
 		return (1);
 	while (i < rt->cy)
 	{
-		rt_aux->camera.coordinates = vec.vec1;
-		if (intersect_cylinder(&rt->cylinder[i], vec.vec2, rt_aux, t))
+		rt_aux.camera.coordinates = vec.vec1;
+		if (intersect_cylinder(&rt->cylinder[i], vec.vec2, &rt_aux, t))
 			if (t[0] > 0.001 && t[0] < vec.light_len)
 				return (1);
 		i++;

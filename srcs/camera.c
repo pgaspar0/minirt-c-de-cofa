@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:01:13 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/05/27 20:17:11 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:46:11 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	init_camera(t_minirt *rt)
 				/ 2));
 	rt->psizex = rt->viewport_width / WIDTH;
 	rt->psizey = rt->viewport_height / HEIGHT;
+	rt->mini.type = 3;
 	if (rt->mini.type != 4)
 		rt->mini.type = -1;
 	rt->mini.index = -1;

@@ -1,6 +1,6 @@
 CC = cc
 NAME = minirt
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 SRCS = ./srcs/vexmanip2.c ./srcs/vexmanip3.c ./srcs/parse3.c ./srcs/parse2.c ./srcs/rot.c ./srcs/cylinder_aux.c ./srcs/trans.c ./srcs/shorteners.c ./srcs/hooksmain.c ./srcs/hooks1.c ./srcs/hooks2.c ./srcs/hooks3.c ./srcs/interloops.c ./srcs/lightapp.c ./srcs/intersections.c ./srcs/hfuncs.c ./srcs/tracing.c ./srcs/minirt.c ./srcs/camera.c ./srcs/parse.c ./srcs/vexmanip.c ./srcs/verifications.c ./srcs/verifications2.c ./srcs/intersection_aux.c ./srcs/intersection_aux2.c ./srcs/lightapp_aux.c
 OBJS = ${SRCS:.c=.o}
 BLUE = \033[1;36m

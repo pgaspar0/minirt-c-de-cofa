@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:14:57 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/06/05 17:50:29 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:14:37 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,12 @@ void	check_caps(t_cylinder_state *s, int i)
 void	final_lighting(t_cylinder_state *s)
 {
 	t_point	ro;
-	t_vecs	*vec;
+	t_vecs	vec;
 	t_point	dir_scaled;
 	t_point	hit_point;
 
-	vec = (t_vecs *)malloc(sizeof(t_vecs));
+	vec.vec1 = vecsoma(ro, dir_scaled);
+	vec.vec2 = s->normal;
 	if (s->rt->closest > s->t_global && s->t_global > 0)
 	{
 		ro = s->rt->camera.coordinates;
@@ -101,8 +102,8 @@ void	final_lighting(t_cylinder_state *s)
 		hit_point = vecsoma(ro, dir_scaled);
 		s->normal = get_cylinder_normal(&s->rt->cylinder[s->closest_i],
 				hit_point, 0.0, 0.0);
-		vec->vec1 = hit_point;
-		vec->vec2 = s->normal;
-		s->color = add_light(s->color, s->rt, vec, s->aux);
+		vec.vec1 = hit_point;
+		vec.vec2 = s->normal;
+		s->color = add_light(s->color, s->rt, &vec, s->aux);
 	}
 }

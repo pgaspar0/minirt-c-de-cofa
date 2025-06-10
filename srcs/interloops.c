@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:39:50 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/06/05 17:58:09 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/10 20:03:21 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ static void	mini_autofill(t_minirt *rt, int type, int index)
 t_color	sphere_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 {
 	int		i;
-	t_vecs	*vec;
+	t_vecs	vec;
 
-	vec = (t_vecs *)malloc(sizeof(t_vecs));
 	i = -1;
-	while (i++ < rt->sp)
+	while (++i < rt->sp)
 	{
 		if (intersect_sphere(&rt->sphere[i], direction, rt, t))
 		{
@@ -39,11 +38,11 @@ t_color	sphere_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 			{
 				rt->closest = t[0];
 				color = rt->sphere[i].color;
-				vec->vec1 = vecsoma(rt->camera.coordinates,
+				vec.vec1 = vecsoma(rt->camera.coordinates,
 						vecprodesc(direction, rt->closest));
-				vec->vec2 = vecnorm(vecdif(vec->vec1,
+				vec.vec2 = vecnorm(vecdif(vec.vec1,
 							rt->sphere[i].coordinates));
-				color = add_light(color, rt, vec, 0);
+				color = add_light(color, rt, &vec, 0);
 				mini_autofill(rt, 0, i);
 			}
 		}
@@ -54,10 +53,9 @@ t_color	sphere_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 t_color	plane_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 {
 	int		i;
-	t_vecs	*vec;
+	t_vecs	vec;
 
 	i = 0;
-	vec = (t_vecs *)malloc(sizeof(t_vecs));
 	while (i < rt->pl)
 	{
 		if (intersect_plane(rt, &rt->plane[i], direction, t))
@@ -66,10 +64,10 @@ t_color	plane_loop(t_minirt *rt, t_point direction, double *t, t_color color)
 			{
 				rt->closest = t[0];
 				color = rt->plane[i].color;
-				vec->vec1 = vecsoma(rt->camera.coordinates,
+				vec.vec1 = vecsoma(rt->camera.coordinates,
 						vecprodesc(direction, rt->closest));
-				vec->vec2 = rt->plane[i].n_vector;
-				color = add_light(color, rt, vec, 0);
+				vec.vec2 = rt->plane[i].n_vector;
+				color = add_light(color, rt, &vec, 0);
 				mini_autofill(rt, 1, i);
 			}
 		}
