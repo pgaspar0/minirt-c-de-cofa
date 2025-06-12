@@ -56,6 +56,8 @@ t_color	intersect_scene(t_point direction, t_minirt *rt)
 	t_color	color;
 
 	rt->closest = 1e9;
+	t[0] = 1e9;
+	t[1] = 1e9;
 	color = colormult(rt->alight.color, rt->alight.ratio);
 	color = sphere_loop(rt, direction, t, color);
 	color = plane_loop(rt, direction, t, color);

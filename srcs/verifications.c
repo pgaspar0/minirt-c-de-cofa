@@ -12,14 +12,12 @@
 
 #include "../includes/minirt.h"
 
-// check colors, RGB (0 - 255)
 int	check_colors(t_color color)
 {
 	return ((color.r >= 0 && color.r <= 255) && (color.g >= 0 && color.g <= 255)
 		&& (color.b >= 0 && color.b <= 255));
 }
 
-// check ambient's light ratio range (0.0 -> 1.0), and colors
 int	check_alight(t_alight *ambiente)
 {
 	return ((ambiente->ratio >= 0.0 && ambiente->ratio <= 1.0)

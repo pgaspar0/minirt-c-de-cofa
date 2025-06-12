@@ -12,8 +12,6 @@
 
 #include "../includes/minirt.h"
 
-// t_point bateu, t_point normal,
-
 t_color	add_light(t_color color, t_minirt *rt, t_vecs *vec, int i)
 {
 	t_color	final;

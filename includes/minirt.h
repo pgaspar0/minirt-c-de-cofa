@@ -170,13 +170,10 @@ int				is_directory(const char *file);
 int				mouses(int button, int x, int y, void *param);
 int				keys(int keycode, void *param);
 int				close_des(t_minirt *rt);
-// int				intersect_cylinder(t_cylinder *cy, t_point direction,
-// 					t_minirt *rt, double *t);
 int				in_shadow(t_minirt *rt, t_point point, t_point light_dir);
 float			*get_delta(t_cylinder *cy, t_point d_perp, t_point oc_perp,
 					t_point d);
 
-// test functions
 t_color			cylinder_loop(t_minirt *rt, t_point dir, double *closest_t,
 					t_color color);
 t_color			parse_color(char *color);
@@ -223,8 +220,6 @@ void			parse_alight(char *line, t_minirt *rt);
 void			parse_camera(char *line, t_minirt *rt);
 void			parse_light(char *line, t_minirt *rt);
 
-// t_color			add_dlight(t_minirt *rt, t_color color, t_color old_color,
-// 					t_point bateu, t_point normal);
 t_color			add_dlight(t_minirt *rt, t_color color, t_color old_color,
 					t_vecs *vec);
 t_color			sphere_loop(t_minirt *rt, t_point direction, double *t,
@@ -232,8 +227,6 @@ t_color			sphere_loop(t_minirt *rt, t_point direction, double *t,
 t_color			plane_loop(t_minirt *rt, t_point direction, double *t,
 					t_color color);
 t_color			add_light(t_color color, t_minirt *rt, t_vecs *vec, int i);
-// t_color			add_light(t_color color, t_minirt *rt, t_point bateu,
-// 					t_point normal, int i);
 t_color			intersect_scene(t_point direction, t_minirt *rt);
 t_color			colormult(t_color color, double mult);
 t_color			add_alight(t_color color, t_minirt *rt);
@@ -247,10 +240,8 @@ int				intersect_cap(t_point ro, t_cylinder_state *s, t_point center,
 int				intersect_cap2(t_mini_intersect *inter, t_point center,
 					double radius, double *t);
 
-// lightapp_aux.c
 int				in_shadow_sp(int i, t_minirt *rt, double t[2], t_vecs *vec);
 
-// intersection_aux.c
 void			init_t_inter(t_mini_intersect *t_inter, t_cylinder *cy,
 					t_point dir, t_minirt *rt);
 void			intersection_aux(t_mini_intersect *t_inter, double *t0,
