@@ -22,10 +22,7 @@ char	**get_map(char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-	{
-		printf("fd: %d\n", fd);
-		return (printf("Error opening scene!\n"), NULL);
-	}
+		return (printf("Error\nError opening scene!\n"), NULL);
 	map_str = ft_strdup("");
 	str = get_next_line(fd);
 	while (str)

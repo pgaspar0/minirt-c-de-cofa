@@ -16,12 +16,12 @@ int	initial_checks(int ac, char *av[])
 {
 	if (ac != 2)
 	{
-		printf("Invalid number of arguments!\n");
+		printf("Error\nInvalid number of arguments!\n");
 		return (0);
 	}
 	if (is_directory(av[1]) || is_bad_file_name(av[1]))
 	{
-		printf("Wrong file name\n");
+		printf("Error\nWrong file name\n");
 		return (0);
 	}
 	return (1);
