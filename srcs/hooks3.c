@@ -18,7 +18,7 @@ void	q_check(t_minirt *rt, int *i)
 	if (rt->mini.type != -1)
 		*i = 0;
 	if (rt->mini.type == 4)
-		init_camera(rt);
+		init_camera_late(rt);
 }
 
 void	e_check(t_minirt *rt, int *i)
@@ -27,5 +27,5 @@ void	e_check(t_minirt *rt, int *i)
 	if (rt->mini.type != -1)
 		*i = 0;
 	if (rt->mini.type == 4)
-		init_camera(rt);
+		init_camera_late(rt);
 }

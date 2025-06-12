@@ -25,7 +25,7 @@ void	w_check(t_minirt *rt, int *i)
 	if (rt->mini.type != -1)
 		*i = 0;
 	if (rt->mini.type == 4)
-		init_camera(rt);
+		init_camera_late(rt);
 }
 
 void	s_check(t_minirt *rt, int *i)
@@ -34,7 +34,7 @@ void	s_check(t_minirt *rt, int *i)
 	if (rt->mini.type != -1)
 		*i = 0;
 	if (rt->mini.type == 4)
-		init_camera(rt);
+		init_camera_late(rt);
 }
 
 void	a_check(t_minirt *rt, int *i)
@@ -43,7 +43,7 @@ void	a_check(t_minirt *rt, int *i)
 	if (rt->mini.type != -1)
 		*i = 0;
 	if (rt->mini.type == 4)
-		init_camera(rt);
+		init_camera_late(rt);
 }
 
 void	d_check(t_minirt *rt, int *i)
@@ -52,5 +52,5 @@ void	d_check(t_minirt *rt, int *i)
 	if (rt->mini.type != -1)
 		*i = 0;
 	if (rt->mini.type == 4)
-		init_camera(rt);
+		init_camera_late(rt);
 }

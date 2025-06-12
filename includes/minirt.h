@@ -219,6 +219,7 @@ void			parse_cylinder(char *line, t_minirt *rt, int index);
 void			parse_alight(char *line, t_minirt *rt);
 void			parse_camera(char *line, t_minirt *rt);
 void			parse_light(char *line, t_minirt *rt);
+void			init_camera_late(t_minirt *rt);
 
 t_color			add_dlight(t_minirt *rt, t_color color, t_color old_color,
 					t_vecs *vec);
