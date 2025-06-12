@@ -1,4 +1,4 @@
-old/*
-old/
-.vscode/*
-.vscode
+./old/*
+./old
+./.vscode/*
+./.vscode
