@@ -45,7 +45,7 @@ int	main(int ac, char *av[])
 	rt.complete = 1;
 	count_elements(map, &rt);
 	if (rt.al != 1 || rt.l != 1 || rt.c != 1 || rt.complete != 1)
-		return (free_matrix(map), 0);
+		return (printf("Error\nMisconfiguration\n"), free_matrix(map), 0);
 	parse_map(map, &rt);
 	if (check_scene(&rt))
 		return (1);

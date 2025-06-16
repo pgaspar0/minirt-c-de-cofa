@@ -187,7 +187,7 @@ int				intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt,
 
 char			**get_map(char *file);
 
-void	count_elements(char **map, t_minirt *rt);
+void			count_elements(char **map, t_minirt *rt);
 void			rotx(t_minirt *rt, double val);
 void			roty(t_minirt *rt, double val);
 void			rotz(t_minirt *rt, double val);
