@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:57:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/06/12 12:20:40 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/06/16 17:38:27 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,15 @@ typedef struct s_minirt
 	int			endian;
 	int			size_line;
 	char		*data;
+	int			al;
+	int			l;
+	int			c;
 	int			sp;
 	int			pl;
 	int			cy;
 	double		closest;
 	int			in;
+	int			complete;
 }				t_minirt;
 
 typedef struct s_cylinder_state
@@ -183,6 +187,7 @@ int				intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt,
 
 char			**get_map(char *file);
 
+void	count_elements(char **map, t_minirt *rt);
 void			rotx(t_minirt *rt, double val);
 void			roty(t_minirt *rt, double val);
 void			rotz(t_minirt *rt, double val);

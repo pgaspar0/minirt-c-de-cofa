@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:11:18 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/06/05 16:34:29 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:47:31 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ int	main(int ac, char *av[])
 	map = get_map(av[1]);
 	if (!map)
 		return (0);
+	rt.complete = 1;
+	count_elements(map, &rt);
+	if (rt.al != 1 || rt.l != 1 || rt.c != 1 || rt.complete != 1)
+		return (free_matrix(map), 0);
 	parse_map(map, &rt);
 	if (check_scene(&rt))
 		return (1);
