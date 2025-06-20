@@ -98,6 +98,7 @@ char				*ft_strdup(const char *str);
 char				*get_next_line(int fd);
 char				*get_strchr(const char *s, int c);
 size_t				ft_strlen(const char *str);
+size_t				ft_matlen(char **s);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
 double				ft_atod(char *str, int sign, int i, int exp);

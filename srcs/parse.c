@@ -122,6 +122,8 @@ void	parse_map(char **map, t_minirt *rt)
 			parse_plane(map[i], rt, qtd[1]++);
 		else if (map[i][0] == 'c')
 			parse_cylinder(map[i], rt, qtd[2]++);
+		if (rt->error == 0)
+			return ;
 		i++;
 	}
 }

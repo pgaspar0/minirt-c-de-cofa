@@ -18,6 +18,7 @@ t_color	parse_color(char *color)
 	char	**colors;
 
 	colors = ft_split(color, ',');
+	// printf("Color 1: %s\nColor 2: %s\nColor 3: %s\n", colors[0], colors[1], colors[2]);
 	colorini.r = ft_atoi(colors[0]);
 	colorini.g = ft_atoi(colors[1]);
 	colorini.b = ft_atoi(colors[2]);
@@ -43,6 +44,14 @@ void	parse_alight(char *line, t_minirt *rt)
 	char	**splitted_line;
 
 	splitted_line = ft_split(line, ' ');
+	if (!splitted_line || !splitted_line[0] || !splitted_line[1] 
+		|| !splitted_line[2] || (int)ft_matlen(splitted_line) != 3
+			|| ft_strcmp(splitted_line[0], "A"))
+	{
+		free_matrix(splitted_line);
+		rt->error = 0;
+		return ;
+	}
 	rt->alight.ratio = ft_atod(splitted_line[1], 1, 0, 0);
 	rt->alight.color = parse_color(splitted_line[2]);
 	free_matrix(splitted_line);
@@ -53,6 +62,15 @@ void	parse_camera(char *line, t_minirt *rt)
 	char	**splitted_line;
 
 	splitted_line = ft_split(line, ' ');
+	if (!splitted_line || !splitted_line[0] || !splitted_line[1] 
+		|| !splitted_line[2] || !splitted_line[3]
+			 || (int)ft_matlen(splitted_line) != 4
+			 	|| ft_strcmp(splitted_line[0], "C"))
+	{
+		free_matrix(splitted_line);
+		rt->error = 0;
+		return ;
+	}
 	rt->camera.coordinates = parse_point(splitted_line[1]);
 	rt->camera.o_vector = parse_point(splitted_line[2]);
 	rt->camera.fov = ft_atoi(splitted_line[3]);
@@ -64,6 +82,15 @@ void	parse_light(char *line, t_minirt *rt)
 	char	**splitted_line;
 
 	splitted_line = ft_split(line, ' ');
+	if (!splitted_line || !splitted_line[0] || !splitted_line[1] 
+		|| !splitted_line[2] || (int)ft_matlen(splitted_line) < 3
+			 || (int)ft_matlen(splitted_line) > 4
+			 	|| ft_strcmp(splitted_line[0], "L"))
+	{
+		free_matrix(splitted_line);
+		rt->error = 0;
+		return ;
+	}
 	rt->light.coordinates = parse_point(splitted_line[1]);
 	rt->light.ratio = ft_atod(splitted_line[2], 1, 0, 0);
 	if (splitted_line[3])

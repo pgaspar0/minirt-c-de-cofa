@@ -32,12 +32,17 @@ void	init_mlx(t_minirt *rt)
 			&rt->endian);
 }
 
+/* int	map_verif(char **map)
+{
+
+} */
+
 int	main(int ac, char *av[])
 {
 	char		**map;
 	t_minirt	rt;
 
-	if (!initial_checks(ac, av))
+	if (!initial_checks(ac, av, &rt))
 		return (0);
 	map = get_map(av[1]);
 	if (!map)
@@ -47,9 +52,23 @@ int	main(int ac, char *av[])
 	if (rt.al != 1 || rt.l != 1 || rt.c != 1 || rt.complete != 1)
 		return (printf("Error\nMisconfiguration\n"), free_matrix(map), 0);
 	parse_map(map, &rt);
-	if (check_scene(&rt))
-		return (1);
 	free_matrix(map);
+	if (rt.error == 0)
+	{
+		printf("Error\nMisconfiguration\n");
+		free(rt.sphere);
+		free(rt.plane);
+		free(rt.cylinder);
+		return (1);
+	}
+	if (check_scene(&rt))
+	{
+		printf("Error\nMisconfiguration\n");
+		free(rt.sphere);
+		free(rt.plane);
+		free(rt.cylinder);
+		return (1);
+	}
 	init_mlx(&rt);
 	init_camera(&rt);
 	put_scene(&rt);

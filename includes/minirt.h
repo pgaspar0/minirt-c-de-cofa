@@ -107,6 +107,7 @@ typedef struct s_minirt
 	int			endian;
 	int			size_line;
 	char		*data;
+	int			error;
 	int			al;
 	int			l;
 	int			c;
@@ -168,7 +169,7 @@ int				check_sphere(t_sphere *sphere);
 int				check_plane(t_plane *plane);
 int				check_cylinder(t_cylinder *cylinder);
 int				check_scene(t_minirt *scene);
-int				initial_checks(int ac, char *av[]);
+int				initial_checks(int ac, char *av[], t_minirt *rt);
 int				is_bad_file_name(char *file);
 int				is_directory(const char *file);
 int				mouses(int button, int x, int y, void *param);

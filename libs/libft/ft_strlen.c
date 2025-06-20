@@ -21,3 +21,15 @@ size_t	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
+
+size_t	ft_matlen(char **s)
+{
+	size_t	i;
+
+	if (!s || !s[0])
+		return (0);
+	i = 0;
+	while (s[i] != NULL)
+		i++;
+	return (i);
+}

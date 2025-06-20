@@ -12,7 +12,7 @@
 
 #include "../includes/minirt.h"
 
-int	initial_checks(int ac, char *av[])
+int	initial_checks(int ac, char *av[], t_minirt *rt)
 {
 	if (ac != 2)
 	{
@@ -24,6 +24,7 @@ int	initial_checks(int ac, char *av[])
 		printf("Error\nWrong file name\n");
 		return (0);
 	}
+	rt->error = -1;
 	return (1);
 }
 
