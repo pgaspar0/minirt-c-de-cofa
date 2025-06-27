@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 18:06:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/06/16 17:13:58 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/27 08:06:30 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_color	parse_color(char *color)
 	char	**colors;
 
 	colors = ft_split(color, ',');
-	// printf("Color 1: %s\nColor 2: %s\nColor 3: %s\n", colors[0], colors[1], colors[2]);
 	colorini.r = ft_atoi(colors[0]);
 	colorini.g = ft_atoi(colors[1]);
 	colorini.b = ft_atoi(colors[2]);
@@ -44,9 +43,9 @@ void	parse_alight(char *line, t_minirt *rt)
 	char	**splitted_line;
 
 	splitted_line = ft_split(line, ' ');
-	if (!splitted_line || !splitted_line[0] || !splitted_line[1] 
+	if (!splitted_line || !splitted_line[0] || !splitted_line[1]
 		|| !splitted_line[2] || (int)ft_matlen(splitted_line) != 3
-			|| ft_strcmp(splitted_line[0], "A"))
+		|| ft_strcmp(splitted_line[0], "A"))
 	{
 		free_matrix(splitted_line);
 		rt->error = 0;
@@ -62,10 +61,10 @@ void	parse_camera(char *line, t_minirt *rt)
 	char	**splitted_line;
 
 	splitted_line = ft_split(line, ' ');
-	if (!splitted_line || !splitted_line[0] || !splitted_line[1] 
+	if (!splitted_line || !splitted_line[0] || !splitted_line[1]
 		|| !splitted_line[2] || !splitted_line[3]
-			 || (int)ft_matlen(splitted_line) != 4
-			 	|| ft_strcmp(splitted_line[0], "C"))
+		|| (int)ft_matlen(splitted_line) != 4 || ft_strcmp(splitted_line[0],
+			"C"))
 	{
 		free_matrix(splitted_line);
 		rt->error = 0;
@@ -82,10 +81,10 @@ void	parse_light(char *line, t_minirt *rt)
 	char	**splitted_line;
 
 	splitted_line = ft_split(line, ' ');
-	if (!splitted_line || !splitted_line[0] || !splitted_line[1] 
+	if (!splitted_line || !splitted_line[0] || !splitted_line[1]
 		|| !splitted_line[2] || (int)ft_matlen(splitted_line) < 3
-			 || (int)ft_matlen(splitted_line) > 4
-			 	|| ft_strcmp(splitted_line[0], "L"))
+		|| (int)ft_matlen(splitted_line) > 4 || ft_strcmp(splitted_line[0],
+			"L"))
 	{
 		free_matrix(splitted_line);
 		rt->error = 0;

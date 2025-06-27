@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 09:14:57 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/06/10 19:14:37 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/27 08:01:11 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,12 @@ void	final_lighting(t_cylinder_state *s)
 	t_point	dir_scaled;
 	t_point	hit_point;
 
-	vec.vec1 = vecsoma(ro, dir_scaled);
-	vec.vec2 = s->normal;
 	if (s->rt->closest > s->t_global && s->t_global > 0)
 	{
 		ro = s->rt->camera.coordinates;
 		dir_scaled = vecprodesc(s->dir, s->t_global);
+		vec.vec1 = vecsoma(ro, dir_scaled);
+		vec.vec2 = s->normal;
 		hit_point = vecsoma(ro, dir_scaled);
 		s->normal = get_cylinder_normal(&s->rt->cylinder[s->closest_i],
 				hit_point, 0.0, 0.0);

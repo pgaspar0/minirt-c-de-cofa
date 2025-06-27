@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:06:53 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/06/16 18:05:56 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/27 08:38:55 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	check_argv(char **s, t_minirt *rt, int i)
 	else
 	{
 		rt->complete = 0;
-		printf("Error: bad scene format\n");
+		printf("Error\nbad scene format\n");
 	}
 	free_matrix(splitted);
 }
@@ -110,18 +110,14 @@ void	parse_map(char **map, t_minirt *rt)
 	qtd[2] = 0;
 	while (map[i])
 	{
-		if (map[i][0] == 'A')
+		if (verify_alpha(map[i], rt) && map[i][0] == 'A')
 			parse_alight(map[i], rt);
 		else if (map[i][0] == 'C')
 			parse_camera(map[i], rt);
 		else if (map[i][0] == 'L')
 			parse_light(map[i], rt);
-		else if (map[i][0] == 's')
-			parse_sphere(map[i], rt, qtd[0]++);
-		else if (map[i][0] == 'p')
-			parse_plane(map[i], rt, qtd[1]++);
-		else if (map[i][0] == 'c')
-			parse_cylinder(map[i], rt, qtd[2]++);
+		else
+			parse_map2(map, rt, i, qtd);
 		if (rt->error == 0)
 			return ;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:53:51 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/05/27 19:54:56 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/26 08:51:41 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	check_scene2(t_minirt *scene)
 	{
 		if (!check_plane(&scene->plane[i]))
 		{
-			printf("Error: plane %d is invalid\n", i + 1);
+			printf("Error\nplane %d is invalid\n", i + 1);
 			return (1);
 		}
 		i++;
@@ -43,7 +43,7 @@ static int	check_scene2(t_minirt *scene)
 	{
 		if (!check_cylinder(&scene->cylinder[i]))
 		{
-			printf("Error: cylinder %d is invalid\n", i + 1);
+			printf("Error\ncylinder %d is invalid\n", i + 1);
 			return (1);
 		}
 		i++;
@@ -59,14 +59,14 @@ int	check_scene(t_minirt *scene)
 	if (!(check_alight(&scene->alight) && check_camera(&scene->camera)
 			&& check_light(&scene->light)))
 	{
-		printf("Error: Invalid scene values\n");
+		printf("Error\nInvalid scene values\n");
 		return (1);
 	}
 	while (i < scene->sp)
 	{
 		if (!check_sphere(&scene->sphere[i]))
 		{
-			printf("Error: Sphere %d is invalid\n", i + 1);
+			printf("Error\nSphere %d is invalid\n", i + 1);
 			return (1);
 		}
 		i++;

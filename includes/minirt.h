@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:57:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/06/16 17:38:27 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/27 08:34:45 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,5 +256,7 @@ void			intersection_aux(t_mini_intersect *t_inter, double *t0,
 void			caps_aux(t_mini_intersect *t_inter, double *t_cap_top,
 					t_point *cap_bottom);
 void			ver_int(t_mini_intersect *inter, t_point cap_bottom);
+int				verify_alpha(char *str, t_minirt *rt);
+void			parse_map2(char **map, t_minirt *rt, int i, int qtd[3]);
 
 #endif

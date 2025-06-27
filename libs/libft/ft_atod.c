@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atod.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 11:14:20 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/03/04 11:14:25 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/06/26 12:46:36 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "libft.h"
+
+static void	has_alpha(const char *nptr, int *flag)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = ft_strlen(nptr);
+	while (i < j)
+	{
+		if(!(nptr[i] >= 48 && nptr[i] <= 57) && nptr[i] != '.' && nptr[i] != ',' && nptr[i] != '-' && nptr[i] != '+')
+		{
+			*flag = 1e9;
+			return ;
+		}
+		i++;
+	}
+	return ;
+}
 
 static double	ft_power(double base, int exp)
 {
@@ -53,5 +73,8 @@ double	ft_atod(char *str, int sign, int i, int exp)
 			exp--;
 		}
 	}
+	has_alpha(str, &exp);
+	if (exp == 1e9)
+		return (-2147483647);
 	return (sign * (result + decimal_part * ft_power(10, exp)));
 }

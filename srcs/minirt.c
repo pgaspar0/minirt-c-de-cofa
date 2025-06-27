@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:11:18 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/06/16 17:47:31 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/27 08:29:24 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,6 @@ void	init_mlx(t_minirt *rt)
 	rt->data = mlx_get_data_addr(rt->img, &rt->bpp, &rt->size_line,
 			&rt->endian);
 }
-
-/* int	map_verif(char **map)
-{
-
-} */
 
 int	main(int ac, char *av[])
 {
