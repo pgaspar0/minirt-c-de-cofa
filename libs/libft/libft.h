@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:37:53 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/03/04 11:16:14 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/06/27 19:58:22 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct s_fdi
+{
+	int				sign;
+	int				i;
+	int				exp;
+}					t_fdi;
 
 typedef struct o_node
 {
@@ -77,7 +84,7 @@ int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 int					ft_atoi_base(const char *str, int str_base);
-int					ft_atoi(const char *str);
+int					ft_atoi(const char *str, int *error);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_strncmp(const char *str1, const char *str2, size_t n);
 int					ft_memcmp(const void *ptr1, const void *ptr2, size_t n);
@@ -101,7 +108,9 @@ size_t				ft_strlen(const char *str);
 size_t				ft_matlen(char **s);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
 size_t				ft_strlcat(char *dest, const char *src, size_t size);
-double				ft_atod(char *str, int sign, int i, int exp);
+// double				ft_atod(char *str, int sign, int i, int exp);
+double				ft_atod(char *str, t_fdi flags, int *error);
+
 long long			ft_atol(const char *nptr);
 
 #endif

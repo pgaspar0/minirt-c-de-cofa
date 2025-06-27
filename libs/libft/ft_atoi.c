@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:19:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/06/26 12:50:32 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/27 19:58:30 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 // 	while (i < j)
 // 	{
 // 		if (!(nptr[i] >= 48 && nptr[i] <= 57 && nptr[i] != ','
-				// && nptr[i] != '.'))
+// 				&& nptr[i] != '.'))
 // 		{
 // 			*flag = -1;
 // 			return ;
@@ -33,17 +33,17 @@
 // 	return ;
 // }
 
-int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *nptr, int *error)
 {
 	int	i;
 	int	f;
 	int	s;
-	// int	flag;
 
 	i = 0;
 	f = 0;
 	s = 1;
-	// flag = 1;
+	if (!nptr)
+		return (*error = 0, 0);
 	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == 32)
 		i++;
 	if (nptr[i] == '-')
@@ -58,6 +58,5 @@ int	ft_atoi(const char *nptr)
 		f = (nptr[i] - '0') + (f * 10);
 		i++;
 	}
-	// has_alpha(nptr, &flag, f, s);
 	return (s * f);
 }

@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:11:18 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/06/27 08:29:24 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:28:33 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,27 @@ void	init_mlx(t_minirt *rt)
 			&rt->endian);
 }
 
+static int	last_checks(t_minirt *rt)
+{
+	if (rt->error == 0)
+	{
+		printf("Error\nMisconfiguration\n");
+		free(rt->sphere);
+		free(rt->plane);
+		free(rt->cylinder);
+		return (0);
+	}
+	if (check_scene(rt))
+	{
+		printf("Error\nMisconfiguration\n");
+		free(rt->sphere);
+		free(rt->plane);
+		free(rt->cylinder);
+		return (0);
+	}
+	return (1);
+}
+
 int	main(int ac, char *av[])
 {
 	char		**map;
@@ -48,22 +69,8 @@ int	main(int ac, char *av[])
 		return (printf("Error\nMisconfiguration\n"), free_matrix(map), 0);
 	parse_map(map, &rt);
 	free_matrix(map);
-	if (rt.error == 0)
-	{
-		printf("Error\nMisconfiguration\n");
-		free(rt.sphere);
-		free(rt.plane);
-		free(rt.cylinder);
+	if (!last_checks(&rt))
 		return (1);
-	}
-	if (check_scene(&rt))
-	{
-		printf("Error\nMisconfiguration\n");
-		free(rt.sphere);
-		free(rt.plane);
-		free(rt.cylinder);
-		return (1);
-	}
 	init_mlx(&rt);
 	init_camera(&rt);
 	put_scene(&rt);

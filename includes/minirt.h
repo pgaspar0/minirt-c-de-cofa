@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 17:57:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/06/27 08:34:45 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:01:57 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ float			*get_delta(t_cylinder *cy, t_point d_perp, t_point oc_perp,
 
 t_color			cylinder_loop(t_minirt *rt, t_point dir, double *closest_t,
 					t_color color);
-t_color			parse_color(char *color);
+t_color			parse_color(char *color, t_minirt *rt);
 
 int				intersect_cylinder(t_cylinder *cy, t_point dir, t_minirt *rt,
 					double *t);
@@ -240,7 +240,7 @@ t_color			add_alight(t_color color, t_minirt *rt);
 t_point			get_pixel(int i, int j, t_minirt *rt);
 t_point			get_cylinder_normal(t_cylinder *cy, t_point hit,
 					double dist_top, double dist_bottom);
-t_point			parse_point(char *point);
+t_point			parse_point(char *point, t_minirt *rt);
 
 int				intersect_cap(t_point ro, t_cylinder_state *s, t_point center,
 					double *t);
